@@ -8,5 +8,3 @@
 
 
 [GitHub](https://github.com/wangxinforme) [issues](https://github.com/wangxinforme/des-util/issues)
-
-![Markdown](http://wx4.sinaimg.cn/mw690/005OXyHfgy1fh6evxykwhj30ag0as3zv.jpg)
