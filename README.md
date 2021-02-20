@@ -4,7 +4,7 @@
 
 
 #### 示例
-* 运行Test.java类Main方法，可以查看加密与解密效果
-
+* DESedeUtil.java类Main方法，可以查看3DES加密与解密效果
+* DESUtil.java类Main方法，可以查看DES加密与解密效果
 
 [GitHub](https://github.com/wangxinforme) [issues](https://github.com/wangxinforme/des-util/issues)

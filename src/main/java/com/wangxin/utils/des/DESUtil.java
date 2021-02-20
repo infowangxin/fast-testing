@@ -1,18 +1,17 @@
-package com.wangxin.utils;
+package com.wangxin.utils.des;
 
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
+import com.wangxin.utils.Base64Util;
+import com.wangxin.utils.HexUtil;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.security.spec.AlgorithmParameterSpec;
 
 /**
- * DES/CBC/NoPadding 加密
+ * DES加密
  */
 public class DESUtil {
 
@@ -29,25 +28,13 @@ public class DESUtil {
      */
     private static final String CIPHER_ALGORITHM = "DES/CBC/NoPadding";
 
-
-    public static void main(String[] args) throws Exception {
-        String KEY = "12345678";
-        String IV = "12345678";
-        String mobile = "13918492887";
-        System.out.println(mobile);
-        String enString = encrypt(mobile, KEY, IV);
-        System.out.println(enString);
-        String deString = decrypt(enString, KEY, IV);
-        System.out.println(deString);
-    }
-
-    private static Key getKey(String KEY) {
-        SecretKeySpec secretKeySpec = new SecretKeySpec(KEY.getBytes(StandardCharsets.UTF_8), ALGORITHM);
+    private static Key getKey(String key) {
+        SecretKeySpec secretKeySpec = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), ALGORITHM);
         return secretKeySpec;
     }
 
-    private static AlgorithmParameterSpec getIV(String IV) {
-        IvParameterSpec parameterSpec = new IvParameterSpec(IV.getBytes(StandardCharsets.UTF_8));
+    private static AlgorithmParameterSpec getIV(String iv) {
+        IvParameterSpec parameterSpec = new IvParameterSpec(iv.getBytes(StandardCharsets.UTF_8));
         return parameterSpec;
     }
 
@@ -62,7 +49,16 @@ public class DESUtil {
         return data + padding_text;
     }
 
-    public static String encrypt(String data, String key, String iv) throws Exception {
+    /**
+     * 加密
+     *
+     * @param data 字符串
+     * @param key  密钥
+     * @param iv   IV偏移量
+     * @return 密文字符串
+     * @throws Exception
+     */
+    public static String encrypt(String data, String key, String iv) {
         String input = pkcs7padding(data);
         try {
             Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
@@ -78,33 +74,47 @@ public class DESUtil {
             cipher.init(Cipher.ENCRYPT_MODE, getKey(key), getIV(iv));
 
             byte[] encrypted = cipher.doFinal(plaintext);
-            String hexStr = MicroHexUtils.byte2hex(encrypted);
-            return string2base64(hexStr);
+            String hexStr = HexUtil.byte2hex(encrypted);
+            return Base64Util.string2base64(hexStr);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("# DES加密失败");
+            return null;
+        }
+    }
+
+    /**
+     * 解密
+     *
+     * @param data 密文字符串
+     * @param key  密钥
+     * @param iv   IV偏移量
+     * @return 字符串
+     * @throws Exception
+     */
+    public static String decrypt(String data, String key, String iv) {
+        try {
+            String base64 = Base64Util.base642string(data);
+            byte[] hexStr = HexUtil.hex2byte(base64);
+            Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
+            cipher.init(Cipher.DECRYPT_MODE, getKey(key), getIV(iv));
+            byte[] original = cipher.doFinal(hexStr);
+            return new String(original, StandardCharsets.UTF_8);
+        } catch (Exception e) {
+            System.err.println("# DES解密失败");
             return null;
         }
     }
 
 
-    public static String decrypt(String data, String key, String iv) throws Exception {
-        String base64 = base642string(data);
-        byte[] hexStr = MicroHexUtils.hex2byte(base64);
-        Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
-        cipher.init(Cipher.DECRYPT_MODE, getKey(key), getIV(iv));
-        byte[] original = cipher.doFinal(hexStr);
-        return new String(original, StandardCharsets.UTF_8);
-    }
-
-
-    public static String base642string(String str) throws IOException {
-        String resp = new String(new BASE64Decoder().decodeBuffer(str), StandardCharsets.UTF_8);
-        return resp;
-    }
-
-    public static String string2base64(String str) {
-        String resp = new BASE64Encoder().encode(str.getBytes(StandardCharsets.UTF_8));
-        return resp;
+    public static void main(String[] args) {
+        String KEY = "12345678";
+        String IV = "12345678";
+        String mobile = "13918492887";
+        System.out.println(mobile);
+        String enString = encrypt(mobile, KEY, IV);
+        System.out.println(enString);
+        String deString = decrypt(enString, KEY, IV);
+        System.out.println(deString);
     }
 
 }
