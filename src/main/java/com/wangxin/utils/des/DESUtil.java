@@ -109,7 +109,7 @@ public class DESUtil {
     public static void main(String[] args) {
         String KEY = "12345678";
         String IV = "12345678";
-        String mobile = "13918492887";
+        String mobile = "139184928111111187";
         System.out.println(mobile);
         String enString = encrypt(mobile, KEY, IV);
         System.out.println(enString);
