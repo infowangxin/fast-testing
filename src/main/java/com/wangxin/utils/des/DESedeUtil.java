@@ -9,9 +9,9 @@ import java.nio.charset.StandardCharsets;
 import java.security.Key;
 
 /**
- * @author 王鑫
- * @Description 3DES算法工具类
- * @date Dec 13, 2017 1:32:32 PM
+ * 3DES算法工具类
+ * @author 胡桃夹子
+ * @date 2021/11/18 18:06
  */
 public class DESedeUtil {
 
@@ -20,6 +20,7 @@ public class DESedeUtil {
 
     private static Key getKey(String key) throws Exception {
         byte[] keyByte = HexUtil.hex2byte(key);
+        assert keyByte != null;
         DESedeKeySpec dks = new DESedeKeySpec(keyByte);
         SecretKeyFactory skf = SecretKeyFactory.getInstance(KEY_ALGORITEM);
         return skf.generateSecret(dks);
@@ -56,6 +57,7 @@ public class DESedeUtil {
             byte[] hexByte = HexUtil.hex2byte(data);
             Cipher cipher = Cipher.getInstance(CIPHER_ALGORITEM);
             cipher.init(Cipher.DECRYPT_MODE, getKey(key));
+            assert hexByte != null;
             return new String(cipher.doFinal(hexByte), StandardCharsets.UTF_8);
         } catch (Exception e) {
             System.err.println("# 3DES解密失败");
@@ -64,8 +66,10 @@ public class DESedeUtil {
     }
 
     public static void main(String[] args)  {
-        String key = "098f6bcd4621d373cade4e832627b4f62017121611345734";// 48个长度的字符串即可
-        String param = "王鑫";
+        // 48个长度的字符串即可
+        String key = "098f6bcd4621d373cade4e832627b4f62017121611345734";
+        //String param = "RjQ1RTg3MERBMTBBMkZFMzFEMjY4MjAwMUUwNUJGNkU=";
+        String param = "18202146378";
         String encr = encrypt(key, param);
         String decr = decrypt(key, encr);
         System.out.println("key:" + key);

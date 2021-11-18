@@ -1,6 +1,5 @@
 package com.wangxin.utils.des;
 
-import com.wangxin.utils.Base64Util;
 import com.wangxin.utils.HexUtil;
 
 import javax.crypto.Cipher;
@@ -9,6 +8,7 @@ import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.security.spec.AlgorithmParameterSpec;
+import java.util.Base64;
 
 /**
  * DES加密
@@ -29,24 +29,27 @@ public class DESUtil {
     private static final String CIPHER_ALGORITHM = "DES/CBC/NoPadding";
 
     private static Key getKey(String key) {
-        SecretKeySpec secretKeySpec = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), ALGORITHM);
-        return secretKeySpec;
+        return new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), ALGORITHM);
     }
 
-    private static AlgorithmParameterSpec getIV(String iv) {
-        IvParameterSpec parameterSpec = new IvParameterSpec(iv.getBytes(StandardCharsets.UTF_8));
-        return parameterSpec;
+    private static AlgorithmParameterSpec getIv(String iv) {
+        return new IvParameterSpec(iv.getBytes(StandardCharsets.UTF_8));
     }
 
-    //此函数是pkcs7padding填充函数
+    /**
+     * 此函数是pkcs7padding填充函数
+     *
+     * @param data 字符参数
+     * @return 填充后的字符
+     */
     public static String pkcs7padding(String data) {
         int bs = 16;
         int padding = bs - (data.length() % bs);
-        String padding_text = "";
+        StringBuilder paddingText = new StringBuilder();
         for (int i = 0; i < padding; i++) {
-            padding_text += (char) padding;
+            paddingText.append((char) padding);
         }
-        return data + padding_text;
+        return data + paddingText;
     }
 
     /**
@@ -56,11 +59,10 @@ public class DESUtil {
      * @param key  密钥
      * @param iv   IV偏移量
      * @return 密文字符串
-     * @throws Exception
      */
     public static String encrypt(String data, String key, String iv) {
-        String input = pkcs7padding(data);
         try {
+            String input = pkcs7padding(data);
             Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
 
             int blockSize = cipher.getBlockSize();
@@ -71,11 +73,11 @@ public class DESUtil {
             }
             byte[] plaintext = new byte[plaintextLength];
             System.arraycopy(dataBytes, 0, plaintext, 0, dataBytes.length);
-            cipher.init(Cipher.ENCRYPT_MODE, getKey(key), getIV(iv));
+            cipher.init(Cipher.ENCRYPT_MODE, getKey(key), getIv(iv));
 
             byte[] encrypted = cipher.doFinal(plaintext);
             String hexStr = HexUtil.byte2hex(encrypted);
-            return Base64Util.string2base64(hexStr);
+            return Base64.getEncoder().encodeToString(hexStr.getBytes(StandardCharsets.UTF_8));
         } catch (Exception e) {
             System.err.println("# DES加密失败");
             return null;
@@ -89,16 +91,16 @@ public class DESUtil {
      * @param key  密钥
      * @param iv   IV偏移量
      * @return 字符串
-     * @throws Exception
      */
     public static String decrypt(String data, String key, String iv) {
         try {
-            String base64 = Base64Util.base642string(data);
+            String base64 = new String(Base64.getDecoder().decode(data), StandardCharsets.UTF_8);
             byte[] hexStr = HexUtil.hex2byte(base64);
             Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
-            cipher.init(Cipher.DECRYPT_MODE, getKey(key), getIV(iv));
+            cipher.init(Cipher.DECRYPT_MODE, getKey(key), getIv(iv));
+            assert hexStr != null;
             byte[] original = cipher.doFinal(hexStr);
-            return new String(original, StandardCharsets.UTF_8);
+            return new String(original, StandardCharsets.UTF_8).trim();
         } catch (Exception e) {
             System.err.println("# DES解密失败");
             return null;
