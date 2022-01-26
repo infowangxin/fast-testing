@@ -2,7 +2,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.wangxin</groupId>
+    <groupId>com.nutcracker</groupId>
     <artifactId>secret-util</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
@@ -11,6 +11,15 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.build.jdkVersion>1.8</project.build.jdkVersion>
     </properties>
+
+    <dependencies>
+        <!-- slf4j -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.33</version>
+        </dependency>
+    </dependencies>
 
     <build>
         <finalName>${artifactId}</finalName>

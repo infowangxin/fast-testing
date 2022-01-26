@@ -1,4 +1,4 @@
-package com.wangxin.utils;
+package com.nutcracker.utils;
 
 /**
  * 16进制工具类
@@ -31,7 +31,7 @@ public class HexUtil {
      * @author 胡桃夹子
      */
     public static byte[] hex2byte(String hex) {
-        if (isBlank(hex)) {
+        if (StringUtil.isBlank(hex)) {
             return null;
         }
         byte[] bts = new byte[hex.length() / 2];
@@ -41,16 +41,4 @@ public class HexUtil {
         return bts;
     }
 
-    public static boolean isBlank(String str) {
-        int strLen;
-        if (str == null || (strLen = str.length()) == 0) {
-            return true;
-        }
-        for (int i = 0; i < strLen; i++) {
-            if ((!Character.isWhitespace(str.charAt(i)))) {
-                return false;
-            }
-        }
-        return true;
-    }
 }
