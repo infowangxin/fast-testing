@@ -1,4 +1,4 @@
-# des-util 介绍 #
+# secret-util 介绍 #
 
 `DES加密工具类`
 
