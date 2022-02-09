@@ -1,0 +1,47 @@
+server:
+  servlet:
+    context-path: /secret-util
+  port: 8882
+
+spring:
+  servlet:
+    multipart:
+      max-request-size: 200MB
+      max-file-size: 200MB
+  profiles:
+    active: dev
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: secret-util
+  mvc:
+    static-path-pattern: /static/**
+    view:
+      prefix: /templates/
+      suffix: .html
+  thymeleaf:
+    #缓冲的配置
+    cache: false
+    #开启MVC thymeleaf 视图解析
+    enabled: true
+    encoding: UTF-8
+    mode: LEGACYHTML5
+    prefix: classpath:/templates/
+    suffix: .html
+  devtools:
+    restart:
+      exclude: static/**,templates/**
+  data:
+    elasticsearch:
+      client:
+        reactive:
+          connection-timeout:
+
+# logback config
+logging:
+  config: classpath:log4j2.xml
+
+#
+secret:
+  pool:
+    size: 3
