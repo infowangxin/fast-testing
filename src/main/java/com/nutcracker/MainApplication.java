@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
  * Start Application
@@ -12,14 +13,15 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
  * @author 胡桃夹子
  * @date 2020-02-24 13:10
  */
-@ServletComponentScan
-@SpringBootApplication
-public class StartApplication {
+@EnableAsync
+@ServletComponentScan(basePackages = "com.nutcracker")
+@SpringBootApplication(scanBasePackages = "com.nutcracker")
+public class MainApplication {
 
-    private static final Logger LOG = LoggerFactory.getLogger(StartApplication.class);
+    private static final Logger LOG = LoggerFactory.getLogger(MainApplication.class);
 
     public static void main(String[] args) {
-        SpringApplication springApplication = new SpringApplication(StartApplication.class);
+        SpringApplication springApplication = new SpringApplication(MainApplication.class);
         springApplication.run(args);
         LOG.info(">>>>>>>>>>>>>>>>>>>> start successful <<<<<<<<<<<<<<<<<<<<");
     }

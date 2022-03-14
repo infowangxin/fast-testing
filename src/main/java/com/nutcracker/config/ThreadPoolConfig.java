@@ -1,4 +1,4 @@
-package com.nutcracker.configuration;
+package com.nutcracker.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

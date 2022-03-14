@@ -42,7 +42,7 @@ public abstract class BaseStrategy {
     /**
      * 线程池开太大,会导致加密系统抗不住
      */
-    @Value("${secret.pool.size}")
+    @Value("${app.secret.pool-size}")
     protected Integer poolSize;
 
     @Autowired

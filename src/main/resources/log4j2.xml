@@ -5,7 +5,7 @@
     <Properties>
         <!-- 定义变量 -->
         <Property name="LOG_DIR">${sys:LOG_PATH:-.}/logs</Property>
-        <Property name="ROLLING_FILE_NAME">privacy-phone-client</Property>
+        <Property name="ROLLING_FILE_NAME">secret-client</Property>
         <Property name="NODE_NAME">${sys:clusternode:-defaultNode}</Property>
         <Property name="PATTERN_LAYOUT">${NODE_NAME} %d{yyyy/MM/dd HH:mm:ss,SSS} %-6r [%-6p] [%t] [%C{-10}.%M\(\) : %L] %msg%n</Property>
     </Properties>
@@ -44,7 +44,6 @@
     </Appenders>
 
     <Loggers>
-        <AsyncLogger name="com.aist" level="DEBUG"/>
         <AsyncLogger name="com.nutcracker" level="DEBUG"/>
         <AsyncLogger name="com.nutcracker.vitrual.StartApplication" level="DEBUG"/>
 

@@ -15,9 +15,9 @@ public class HomeController {
 
     private static final Logger LOG = LoggerFactory.getLogger(HomeController.class);
 
-    @GetMapping(value = {"/", "home", "index"})
-    public String redirect() {
-        return "redirect:/secret";
+    @GetMapping(value = {"/", "index"})
+    public String index() {
+        return "redirect:/secret/index";
     }
 
     @GetMapping("/403")
