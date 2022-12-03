@@ -17,6 +17,7 @@ spring:
     active: dev
   main:
     allow-bean-definition-overriding: true
+    allow-circular-references: true
   application:
     name: secret-util
   mvc:
@@ -36,6 +37,9 @@ spring:
   devtools:
     restart:
       exclude: static/**,templates/**
+  redis:
+    redisson:
+      config: classpath:redisson_cluster.yml
 springdoc:
   version: '@version@'
   api-docs:

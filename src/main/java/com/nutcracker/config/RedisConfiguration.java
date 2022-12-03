@@ -1,0 +1,156 @@
+package com.nutcracker.config;
+
+import com.nutcracker.constant.CacheableKey;
+import org.apache.commons.lang3.StringUtils;
+import org.redisson.Redisson;
+import org.redisson.api.RedissonClient;
+import org.redisson.config.Config;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CachingConfigurerSupport;
+import org.springframework.cache.interceptor.CacheErrorHandler;
+import org.springframework.cache.interceptor.CacheResolver;
+import org.springframework.cache.interceptor.KeyGenerator;
+import org.springframework.cache.interceptor.SimpleCacheErrorHandler;
+import org.springframework.cache.interceptor.SimpleCacheResolver;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.redis.cache.RedisCacheConfiguration;
+import org.springframework.data.redis.cache.RedisCacheManager;
+import org.springframework.data.redis.cache.RedisCacheWriter;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.RedisSerializationContext;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
+
+import javax.annotation.Resource;
+import java.io.IOException;
+import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+
+/**
+ * Redis
+ *
+ * @author 胡桃夹子
+ * @date 2020-03-01 09:49
+ */
+@Configuration
+public class RedisConfiguration extends CachingConfigurerSupport {
+
+    private static final Logger log = LoggerFactory.getLogger(RedisConfiguration.class);
+
+    @Resource
+    private RedisConnectionFactory redisConnectionFactory;
+
+    @Bean(destroyMethod = "shutdown")
+    public RedissonClient redissonClient(@Value("${spring.redis.redisson.config}") String path) throws IOException {
+        log.info("# redissonConfig={}", path);
+        String config = StringUtils.replace(path, "classpath:", "");
+        log.info("# config={}", config);
+        return Redisson.create(Config.fromYAML(new ClassPathResource(config).getInputStream()));
+    }
+
+    /**
+     * redisTemplate 序列化使用的jdkSerializeable, 存储二进制字节码, 所以自定义序列化类
+     *
+     * @param redisConnectionFactory redis连接工厂
+     * @return RedisTemplate<Object, Object>
+     */
+    @Bean
+    public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
+        RedisTemplate<Object, Object> redisTemplate = new RedisTemplate<>();
+        redisTemplate.setConnectionFactory(redisConnectionFactory);
+
+        StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
+        GenericJackson2JsonRedisSerializer jackson2JsonRedisSerializer = new GenericJackson2JsonRedisSerializer();
+
+        // 设置键（key）的序列化
+        redisTemplate.setKeySerializer(stringRedisSerializer);
+        redisTemplate.setHashKeySerializer(stringRedisSerializer);
+
+        // 设置值（value）的序列化
+        redisTemplate.setValueSerializer(jackson2JsonRedisSerializer);
+        redisTemplate.setHashValueSerializer(jackson2JsonRedisSerializer);
+
+        redisTemplate.afterPropertiesSet();
+        return redisTemplate;
+    }
+
+    /**
+     * 重写KeyGenerator
+     * 自定义redis-key
+     *
+     * @return KeyGenerator
+     */
+    @Override
+    @Bean
+    public KeyGenerator keyGenerator() {
+        return (target, method, params) -> {
+            StringBuilder sb = new StringBuilder();
+            sb.append(target.getClass().getName()).append(".");
+            sb.append(method.getName()).append(".");
+            for (Object param : params) {
+                sb.append(param.toString());
+            }
+            if (log.isDebugEnabled()) {
+                log.debug("# keyGenerator={}", sb);
+            }
+            return sb.toString();
+        };
+    }
+
+    @Bean
+    @Override
+    public CacheResolver cacheResolver() {
+        return new SimpleCacheResolver(Objects.requireNonNull(cacheManager()));
+    }
+
+    @Bean
+    @Override
+    public CacheErrorHandler errorHandler() {
+        // 用于捕获从Cache中进行CRUD时的异常的回调处理器。
+        return new SimpleCacheErrorHandler();
+    }
+
+    @Bean
+    @Override
+    public CacheManager cacheManager() {
+        return new RedisCacheManager(
+                RedisCacheWriter.nonLockingRedisCacheWriter(redisConnectionFactory),
+                // 默认策略，未配置的 key 会使用这个, 默认2小时
+                this.getRedisCacheConfigurationWithTtl(7200),
+                // 指定 key 策略
+                this.getRedisCacheConfigurationMap()
+        );
+    }
+
+
+    private Map<String, RedisCacheConfiguration> getRedisCacheConfigurationMap() {
+        Map<String, RedisCacheConfiguration> redisCacheConfigurationMap = new HashMap<>();
+        Map<String, Long> keyMap = CacheableKey.getCacheableKeyMap();
+        for (Map.Entry<String, Long> entry : keyMap.entrySet()) {
+            if (log.isDebugEnabled()) {
+                log.debug("# CacheManager cacheNames=[{}],timeout=[{}]s", entry.getKey(), entry.getValue());
+            }
+            redisCacheConfigurationMap.put(entry.getKey(), this.getRedisCacheConfigurationWithTtl(entry.getValue()));
+        }
+        return redisCacheConfigurationMap;
+    }
+
+    private RedisCacheConfiguration getRedisCacheConfigurationWithTtl(long seconds) {
+        GenericJackson2JsonRedisSerializer jackson2JsonRedisSerializer = new GenericJackson2JsonRedisSerializer();
+        RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig();
+        redisCacheConfiguration = redisCacheConfiguration.serializeValuesWith(
+                RedisSerializationContext.SerializationPair.fromSerializer(jackson2JsonRedisSerializer)
+        ).entryTtl(Duration.ofSeconds(seconds));
+        return redisCacheConfiguration;
+    }
+
+
+}

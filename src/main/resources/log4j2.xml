@@ -6,7 +6,7 @@
         <!-- 定义变量 -->
         <Property name="LOG_DIR">${sys:LOG_PATH:-.}/logs</Property>
         <Property name="ROLLING_FILE_NAME">secret-client</Property>
-        <Property name="NODE_NAME">${sys:clusternode:-defaultNode}</Property>
+        <Property name="NODE_NAME">${sys:clusternode:-}</Property>
         <Property name="PATTERN_LAYOUT">${NODE_NAME} %d{yyyy/MM/dd HH:mm:ss,SSS} %-6r [%-6p] [%t] [%C{-10}.%M\(\) : %L] %msg%n</Property>
     </Properties>
 

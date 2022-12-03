@@ -1,0 +1,38 @@
+# https://github.com/redisson/redisson/wiki/2.-配置方法#22-文件方式配置
+---
+clusterServersConfig:
+  idleConnectionTimeout: 10000
+  connectTimeout: 10000
+  timeout: 30000
+  retryAttempts: 3
+  retryInterval: 1500
+  failedSlaveReconnectionInterval: 3000
+  failedSlaveCheckInterval: 60000
+  password: null
+  subscriptionsPerConnection: 5
+  clientName: "centa-esapi-server"
+  loadBalancer: !<org.redisson.connection.balancer.RoundRobinLoadBalancer> {}
+  subscriptionConnectionMinimumIdleSize: 1
+  subscriptionConnectionPoolSize: 25
+  slaveConnectionMinimumIdleSize: 12
+  slaveConnectionPoolSize: 32
+  masterConnectionMinimumIdleSize: 12
+  masterConnectionPoolSize: 32
+  readMode: "SLAVE"
+  subscriptionMode: "SLAVE"
+  nodeAddresses:
+    - "redis://redis01:5000"
+    - "redis://redis02:5001"
+    - "redis://redis03:5002"
+    - "redis://redis04:5003"
+    - "redis://redis05:5004"
+    - "redis://redis06:5005"
+  scanInterval: 1000
+  pingConnectionInterval: 0
+  keepAlive: false
+  tcpNoDelay: false
+threads: 8
+nettyThreads: 16
+#codec: !<org.redisson.codec.FstCodec> {}
+codec: !<org.redisson.codec.SerializationCodec> {}
+transportMode: "NIO"
