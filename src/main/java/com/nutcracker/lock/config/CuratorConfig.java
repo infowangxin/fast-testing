@@ -4,6 +4,7 @@ import org.apache.curator.RetryPolicy;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.retry.ExponentialBackoffRetry;
+import org.apache.curator.retry.RetryNTimes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,7 +22,7 @@ public class CuratorConfig {
 
     private static final Logger log = LoggerFactory.getLogger(CuratorConfig.class);
 
-    @Bean
+    @Bean(initMethod = "start", destroyMethod = "close")
     public CuratorFramework curatorFramework(
             @Value("${locks.zookeeper.connect-server}") String connectString,
             @Value("${locks.zookeeper.base-sleep-time-ms}") int baseSleepTimeMs,
@@ -30,19 +31,13 @@ public class CuratorConfig {
             @Value("${locks.zookeeper.session-timeout}") int connectionTimeoutMs) {
         log.debug("# connectString={},baseSleepTimeMs={},maxRetries={},sessionTimeoutMs={},connectionTimeoutMs={},",
                 connectString, baseSleepTimeMs, maxRetries, sessionTimeoutMs, connectionTimeoutMs);
-        // 配置zookeeper连接的重试策略
-        RetryPolicy retryPolicy = new ExponentialBackoffRetry(baseSleepTimeMs, maxRetries);
-        // 构建
-        CuratorFramework curatorFramework = CuratorFrameworkFactory
+        return CuratorFrameworkFactory
                 .builder()
                 .connectString(connectString)
                 .sessionTimeoutMs(sessionTimeoutMs)
                 .connectionTimeoutMs(connectionTimeoutMs)
                 .retryPolicy(new ExponentialBackoffRetry(1000, 10))
-                .retryPolicy(retryPolicy)
+                .retryPolicy(new RetryNTimes(baseSleepTimeMs, maxRetries))
                 .build();
-        // 连接zookeeper
-        curatorFramework.start();
-        return curatorFramework;
     }
 }

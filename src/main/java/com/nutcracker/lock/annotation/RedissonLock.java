@@ -5,6 +5,7 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Redis分布式锁注解
@@ -33,7 +34,7 @@ public @interface RedissonLock {
     long waitTime() default 2000;
 
     /**
-     * 锁的过期时间，默认60000毫秒，超时自动失效
+     * 锁的过期时间，默认5000毫秒，超时自动失效
      * 60000毫秒=60秒=1分钟
      * 120000毫秒=120秒=2分钟
      * 300000毫秒=300秒=5分钟
@@ -41,5 +42,10 @@ public @interface RedissonLock {
      * 900000毫秒=900秒=15分钟
      * 1200000毫秒=1200秒=20分钟
      */
-    long expire() default 60000;
+    long expire() default 5000;
+
+    /**
+     * 获取锁等待时间/锁的过期时间 的 单位，默认毫秒
+     */
+    TimeUnit timeUnit() default TimeUnit.MILLISECONDS;
 }
