@@ -112,6 +112,22 @@
             <version>3.18.0</version>
         </dependency>
 
+        <!--
+        Curator 存在版本兼容问题
+        Curator 2.x.x-兼容两个zk 3.4.x 和zk 3.5.x
+        Curator 3.x.x-兼容兼容zk 3.5
+        -->
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-framework</artifactId>
+            <version>2.13.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-recipes</artifactId>
+            <version>2.13.0</version>
+        </dependency>
+
         <!-- test -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

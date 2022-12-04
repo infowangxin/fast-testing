@@ -1,4 +1,4 @@
-package com.nutcracker.util;
+package com.nutcracker.lock.util;
 
 import org.springframework.expression.Expression;
 import org.springframework.expression.ExpressionParser;
@@ -8,15 +8,15 @@ import org.springframework.expression.spel.support.StandardEvaluationContext;
 import java.util.Map;
 
 /**
- * spel工具
+ * SpringEL工具
  *
  * @author 胡桃夹子
  * @date 2022-12-03 17:09
  */
-public class SpELUtil {
+public class SpringELUtil {
 
     /**
-     * spel转换
+     * spring el转换
      *
      * @param expressionString  分析表达式字符串
      * @param variables         参数

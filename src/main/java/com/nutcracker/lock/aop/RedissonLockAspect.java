@@ -1,7 +1,9 @@
-package com.nutcracker.config;
+package com.nutcracker.lock.aop;
 
-import com.nutcracker.annotation.RedisLock;
-import com.nutcracker.util.SpELUtil;
+import com.nutcracker.exception.BusinessException;
+import com.nutcracker.lock.annotation.RedissonLock;
+import com.nutcracker.lock.exception.LockException;
+import com.nutcracker.lock.util.SpringELUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
@@ -24,7 +26,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 
 /**
- * redis aop distributed lock
+ * redisson distributed lock
  *
  * @author 胡桃夹子
  * @date 2022/12/3 17:15
@@ -49,7 +51,7 @@ public class RedissonLockAspect {
      * @return 切面执行后结果
      */
     @Around("@annotation(distributedLock)")
-    public Object lock(ProceedingJoinPoint proceedingJoinPoint, RedisLock distributedLock) {
+    public Object lock(ProceedingJoinPoint proceedingJoinPoint, RedissonLock distributedLock) {
         // key
         String key = distributedLock.key();
         // 缓存空间
@@ -88,13 +90,13 @@ public class RedissonLockAspect {
                 for (int i = 0; i < parameters.length; i++) {
                     variables.put(parameters[i].getName(), objects[i]);
                 }
-                fullkey.append(SpELUtil.parse(key, variables, String.class));
+                fullkey.append(SpringELUtil.parse(key, variables, String.class));
             } else {
                 fullkey.append(keyGenerator.generate(proceedingJoinPoint.getTarget(), method, objects).toString());
             }
 
         } catch (Exception e) {
-            throw new RuntimeException("redisson加锁异常", e);
+            throw new BusinessException("系统异常", e);
         }
 
         RLock lock = redissonClient.getLock(fullkey.toString());
@@ -104,7 +106,7 @@ public class RedissonLockAspect {
             locked = lock.tryLock(0, 120, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
             log.error("redisson加锁失败,fullkey={}, error msg={}", fullkey, e.getLocalizedMessage());
-            return null;
+            throw new LockException("加锁失败", e);
         }
         if (!locked) {
             log.error("redisson加锁失败 fullkey={}", fullkey);
@@ -115,7 +117,7 @@ public class RedissonLockAspect {
             return proceedingJoinPoint.proceed();
         } catch (Throwable e) {
             log.error("redisson加锁后执行业务逻辑报错,fullkey={}, error msg={}", fullkey, e.getLocalizedMessage());
-            return null;
+            throw new BusinessException("异常系统", e);
         } finally {
             lock.unlock();
             log.debug("redisson释放锁成功:{}", fullkey);

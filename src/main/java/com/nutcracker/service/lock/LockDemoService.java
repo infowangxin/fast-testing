@@ -31,4 +31,13 @@ public interface LockDemoService {
      * @return true=操作成功,false=操作失败
      */
     public void redisLockNoResultByAop(String key);
+
+
+    /**
+     * zookeeper 分布式锁测试
+     *
+     * @param key 参数
+     * @return true=操作成功,false=操作失败
+     */
+    public Boolean zookeeperLockDemo(String key);
 }

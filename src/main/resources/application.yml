@@ -75,3 +75,12 @@ app:
   version: '@version@'
   secret:
     pool-size: 3
+
+locks:
+  zookeeper:                            # zookeeper分布式锁
+#    connect-server: zookeeper01:2181,zookeeper02:2181,zookeeper03:2181    # 连接地址
+    connect-server: zookeeper01:2181    # 连接地址
+    base-sleep-time-ms: 1000            # 每次重试时间间隔，单位毫秒
+    max-retries: 3                      # 重试次数
+    connection-timeout: 30000           # 连接超时时间,30秒
+    session-timeout: 30000              # session会话超时时间,30秒
