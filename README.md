@@ -1,11 +1,9 @@
-# secret-util 介绍 #
+# fast-testing 介绍 #
 
-`DES加密工具类`
+`加密工具类`
 
+`redis分布式锁`
 
-#### 示例
-* DESedeUtil.java类Main方法，可以查看3DES加密与解密效果
-* DESUtil.java类Main方法，可以查看DES加密与解密效果
-* RsaUtil.java类Main方法，可以查看RSA加密与解密效果
+`zookeeper分布式锁`
 
-[GitHub](https://github.com/infowangxin) [issues](https://github.com/infowangxin/secret-util/issues)
+[GitHub](https://github.com/infowangxin) [issues](https://github.com/infowangxin/fast-testing/issues)

@@ -6,7 +6,7 @@ management:
         include: '*'
 server:
   servlet:
-    context-path: /secret-util
+    context-path: /
   port: 8888
 spring:
   servlet:
