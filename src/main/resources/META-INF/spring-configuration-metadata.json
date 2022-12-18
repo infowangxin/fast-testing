@@ -4,6 +4,10 @@
     {
       "name": "app",
       "description": "应用相关参数配置"
+    },
+    {
+      "name": "springdoc",
+      "description": "Spring Doc"
     }
   ],
   "properties": [
@@ -16,6 +20,11 @@
       "name": "app.secret.pool-size",
       "type": "java.lang.Integer",
       "description": "加解密线程池大小"
+    },
+    {
+      "name": "springdoc.version",
+      "type": "java.lang.String",
+      "description": "接口版本号"
     }
   ]
 }
