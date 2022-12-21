@@ -18,8 +18,66 @@
         <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <!-- 编译打包时，不执行测试用例，也不编译测试用例类 -->
         <maven.test.skip>true</maven.test.skip>
+
+        <!-- 仓库地址 -->
+        <aliyun.nexus>https://maven.aliyun.com/repository/public</aliyun.nexus>
+        <oss.release>https://oss.sonatype.org/content/repositories/snapshots</oss.release>
+        <oss.snapshot>https://oss.sonatype.org/content/repositories/snapshots</oss.snapshot>
     </properties>
+
+    <!-- repositorie 表示下载项目依赖库文件的maven仓库地址 -->
+    <repositories>
+        <repository>
+            <id>nexus</id>
+            <url>${aliyun.nexus}</url>
+            <!--<url>${oss.release}</url>-->
+            <!--<url>${oss.snapshot}</url>-->
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
+    </repositories>
+    <!-- pluginRepositories 表示插件的下载仓库地址，字段和用法与repositories中的repository基本一致 -->
+    <pluginRepositories>
+        <pluginRepository>
+            <id>nexus</id>
+            <url>${aliyun.nexus}</url>
+            <!--<url>${oss.release}</url>-->
+            <!--<url>${oss.snapshot}</url>-->
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+    <!-- 表示项目打包成库文件后要上传到仓库地址 -->
+    <!--<distributionManagement>-->
+    <!--    &lt;!&ndash; 正式版本 &ndash;&gt;-->
+    <!--    <repository>-->
+    <!--        &lt;!&ndash; nexus服务器中用户名（settings.xml中<server>的id）&ndash;&gt;-->
+    <!--        <id>release</id>-->
+    <!--        &lt;!&ndash; 自定义名称 &ndash;&gt;-->
+    <!--        <name>Nexus Releases Repository</name>-->
+    <!--        <url>http://${nexus.url}/nexus/content//maven-releases/</url>-->
+    <!--    </repository>-->
+    <!--    &lt;!&ndash; 快照版本 &ndash;&gt;-->
+    <!--    <snapshotRepository>-->
+    <!--        &lt;!&ndash; nexus服务器中用户名（settings.xml中<server>的id）&ndash;&gt;-->
+    <!--        <id>snapshots</id>-->
+    <!--        &lt;!&ndash; 自定义名称 &ndash;&gt;-->
+    <!--        <name>Nexus Releases Repository</name>-->
+    <!--        <url>http://${nexus.url}/nexus/content//maven-snapshots/</url>-->
+    <!--    </snapshotRepository>-->
+    <!--</distributionManagement>-->
 
     <dependencies>
         <!-- SpringBoot -->
