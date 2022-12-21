@@ -13,9 +13,9 @@ public class ListUtil {
     /**
      * 1> 按照份数---划分list
      *
-     * @param source
+     * @param source 集合数据
      * @param num    想要划分成多少份
-     * @return
+     * @return 集合数据
      */
     public static <T> List<List<T>> splitListForNum(List<T> source, int num) {
         List<List<T>> result = new ArrayList<>();
@@ -42,10 +42,10 @@ public class ListUtil {
     /**
      * 2> 根据目标容量 划分List
      *
-     * @param source
+     * @param source   集合数据
      * @param capacity 划分完成的单个List容量
-     * @param <T>
-     * @return
+     * @param <T>      泛型
+     * @return 集合数据
      */
     public static <T> List<List<T>> splitListByCapacity(List<T> source, int capacity) {
         List<List<T>> result = new ArrayList<>();

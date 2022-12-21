@@ -4,28 +4,22 @@ import com.nutcracker.exception.BusinessException;
 import com.nutcracker.lock.annotation.RedissonLock;
 import com.nutcracker.lock.exception.LockException;
 import com.nutcracker.lock.util.SpringELUtil;
-import groovy.util.logging.Slf4j;
+import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.reflect.MethodSignature;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
-
-import org.springframework.cache.interceptor.KeyGenerator;
-
-import javax.annotation.Resource;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * redisson distributed lock
@@ -33,11 +27,10 @@ import java.lang.reflect.Parameter;
  * @author 胡桃夹子
  * @date 2022/12/3 17:15
  */
+@Slf4j
 @Component
 @Aspect
 public class RedissonLockAspect {
-
-    private static final Logger log = LoggerFactory.getLogger(RedissonLockAspect.class);
 
     @Resource
     private RedissonClient redissonClient;

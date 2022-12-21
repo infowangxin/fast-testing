@@ -1,11 +1,15 @@
 package com.nutcracker.config;
 
 import com.nutcracker.constant.CacheableKey;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.redisson.Redisson;
+import org.redisson.api.RedissonClient;
+import org.redisson.config.Config;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
-import org.springframework.cache.annotation.CachingConfigurerSupport;
+import org.springframework.cache.annotation.CachingConfigurer;
 import org.springframework.cache.interceptor.CacheErrorHandler;
 import org.springframework.cache.interceptor.CacheResolver;
 import org.springframework.cache.interceptor.KeyGenerator;
@@ -13,6 +17,7 @@ import org.springframework.cache.interceptor.SimpleCacheErrorHandler;
 import org.springframework.cache.interceptor.SimpleCacheResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.cache.RedisCacheWriter;
@@ -22,7 +27,7 @@ import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSeriali
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-import javax.annotation.Resource;
+import java.io.IOException;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,13 +39,20 @@ import java.util.Objects;
  * @author 胡桃夹子
  * @date 2020-03-01 09:49
  */
+@Slf4j
 @Configuration
-public class RedisConfig extends CachingConfigurerSupport {
-
-    private static final Logger log = LoggerFactory.getLogger(RedisConfig.class);
+public class RedisConfig implements CachingConfigurer {
 
     @Resource
     private RedisConnectionFactory redisConnectionFactory;
+
+    @Bean(destroyMethod = "shutdown")
+    public RedissonClient redissonClient(@Value("${spring.redis.redisson.config}") String path) throws IOException {
+        log.info("# redissonConfig={}", path);
+        String config = StringUtils.replace(path, "classpath:", "");
+        log.info("# config={}", config);
+        return Redisson.create(Config.fromYAML(new ClassPathResource(config).getInputStream()));
+    }
 
     /**
      * redisTemplate 序列化使用的jdkSerializeable, 存储二进制字节码, 所以自定义序列化类

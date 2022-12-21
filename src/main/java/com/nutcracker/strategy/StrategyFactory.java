@@ -2,8 +2,7 @@ package com.nutcracker.strategy;
 
 import com.nutcracker.enums.SecretStrategyEnum;
 import com.nutcracker.strategy.secret.BaseStrategy;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -15,11 +14,9 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author 胡桃夹子
  * @date 2021-11-18 09:24
  */
+@Slf4j
 @Service
 public class StrategyFactory {
-
-    private static final Logger LOG = LoggerFactory.getLogger(StrategyFactory.class);
-
 
     private final Map<String, BaseStrategy> secretStrategyMap = new ConcurrentHashMap<>();
 
@@ -31,7 +28,7 @@ public class StrategyFactory {
     public void registerSecretStrategy(BaseStrategy strategy) {
         SecretStrategyEnum secretStrategyEnum = strategy.getSecretStrategyEnum();
         if (null != secretStrategyEnum) {
-            LOG.info("# register strategy, {}", strategy.getClass().getName());
+            log.info("# register strategy, {}", strategy.getClass().getName());
             secretStrategyMap.put(secretStrategyEnum.name(), strategy);
         }
     }
@@ -48,7 +45,7 @@ public class StrategyFactory {
         if (null != secretStrategyEnum) {
             strategy = secretStrategyMap.get(secretStrategyEnum.name());
         } else {
-            LOG.warn("# not fund strategy, {}", secretStrategyEnum);
+            log.warn("# not fund strategy, {}", secretStrategyEnum);
         }
         return strategy;
     }

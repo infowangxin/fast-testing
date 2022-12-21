@@ -1,5 +1,6 @@
 package com.nutcracker.util.secret;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,9 +20,8 @@ import java.security.SecureRandom;
  * @author 胡桃夹子
  * @date 2021/11/18 18:06
  */
+@Slf4j
 public class DESedeUtil {
-
-    private static final Logger LOG = LoggerFactory.getLogger(DESedeUtil.class);
 
     public static final String KEY = "DAC10EE5E5C8CDE980C46D946857EADF7FD59B9EFEA48F64";
 
@@ -37,10 +37,10 @@ public class DESedeUtil {
             keyGenerator.init(new SecureRandom());
             SecretKey secretKey = keyGenerator.generateKey();
             String key = HexUtil.byte2hex(secretKey.getEncoded());
-            LOG.info("# key={}", key);
+            log.info("# key={}", key);
             return key;
         } catch (NoSuchAlgorithmException e) {
-            LOG.error("# 随机生成密钥失败, error msg={}", e.getLocalizedMessage());
+            log.error("# 随机生成密钥失败, error msg={}", e.getLocalizedMessage());
             return null;
         }
     }
@@ -68,7 +68,7 @@ public class DESedeUtil {
             cipher.init(Cipher.ENCRYPT_MODE, getKey(key));
             return HexUtil.byte2hex(cipher.doFinal(encryptByte));
         } catch (Exception e) {
-            LOG.error("# 加密异常,data={},error msg={}", data, e.getLocalizedMessage());
+            log.error("# 加密异常,data={},error msg={}", data, e.getLocalizedMessage());
             throw new RuntimeException("加密失败");
         }
     }
@@ -88,7 +88,7 @@ public class DESedeUtil {
             assert hexByte != null;
             return new String(cipher.doFinal(hexByte), StandardCharsets.UTF_8);
         } catch (Exception e) {
-            LOG.error("# 解密异常,data={},error msg={}", data, e.getLocalizedMessage());
+            log.error("# 解密异常,data={},error msg={}", data, e.getLocalizedMessage());
             throw new RuntimeException("解密失败");
         }
     }

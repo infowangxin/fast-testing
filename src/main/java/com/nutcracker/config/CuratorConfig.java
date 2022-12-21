@@ -1,12 +1,10 @@
-package com.nutcracker.lock.config;
+package com.nutcracker.config;
 
-import org.apache.curator.RetryPolicy;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.apache.curator.retry.RetryNTimes;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,10 +15,9 @@ import org.springframework.context.annotation.Configuration;
  * @author 胡桃夹子
  * @date 2022-12-04 12:24
  */
+@Slf4j
 @Configuration
 public class CuratorConfig {
-
-    private static final Logger log = LoggerFactory.getLogger(CuratorConfig.class);
 
     @Bean(initMethod = "start", destroyMethod = "close")
     public CuratorFramework curatorFramework(

@@ -50,6 +50,7 @@ mybatis-plus:
   # 关闭mybatis-plus的banner打印
   global-config:
     banner: false
+  type-aliases-package: com.nutcracker.mapper
 # logback config
 logging:
   config: classpath:log4j2.xml

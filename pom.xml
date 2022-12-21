@@ -5,17 +5,17 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.6</version>
+        <version>3.0.0</version>
         <relativePath/>
     </parent>
 
     <groupId>com.nutcracker</groupId>
     <artifactId>fast-testing</artifactId>
-    <version>2022.03.14-SNAPSHOT</version>
+    <version>2022.12.21-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <properties>
-        <java.version>1.8</java.version>
+        <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.test.skip>true</maven.test.skip>
@@ -42,26 +42,18 @@
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
 
-        <!-- mybatis-plus -->
+        <!-- mybatis-plus 与 springboot3.x 有兼容性问题，mybatis-plus快照版本已经修复，需要到快照仓库下载 -->
+        <!-- https://oss.sonatype.org/content/repositories/snapshots -->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>3.5.2</version>
+            <version>3.5.2.7-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>org.xerial</groupId>
             <artifactId>sqlite-jdbc</artifactId>
         </dependency>
-        <dependency>
-            <groupId>p6spy</groupId>
-            <artifactId>p6spy</artifactId>
-            <version>3.9.1</version>
-        </dependency>
-        <!--<dependency>-->
-        <!--    <groupId>mysql</groupId>-->
-        <!--    <artifactId>mysql-connector-java</artifactId>-->
-        <!--</dependency>-->
 
         <!-- log4j2 -->
         <dependency>
@@ -124,7 +116,7 @@
         <dependency>
             <groupId>org.redisson</groupId>
             <artifactId>redisson-spring-boot-starter</artifactId>
-            <version>3.18.1</version>
+            <version>3.19.0</version>
         </dependency>
 
         <!--

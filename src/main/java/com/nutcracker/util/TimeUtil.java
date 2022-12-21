@@ -1,6 +1,7 @@
 package com.nutcracker.util;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 /**
  * 时间转换工具类
@@ -14,25 +15,25 @@ public class TimeUtil {
      * 获取时间差，分钟
      *
      * @param time 毫秒值,执行开始时间
-     * @return
+     * @return 时间差
      */
     public static BigDecimal getMinute(long time) {
         long diff = System.currentTimeMillis() - time;
         BigDecimal n1 = new BigDecimal(diff);
         BigDecimal n2 = new BigDecimal(60000);
-        return n1.divide(n2, 4, BigDecimal.ROUND_HALF_UP);
+        return n1.divide(n2, 4, RoundingMode.HALF_UP);
     }
 
     /**
      * 获取时间差，秒
      *
      * @param time 毫秒值,执行开始时间
-     * @return
+     * @return 时间差
      */
     public static BigDecimal getSecond(long time) {
         long diff = System.currentTimeMillis() - time;
         BigDecimal n1 = new BigDecimal(diff);
         BigDecimal n2 = new BigDecimal(1000);
-        return n1.divide(n2, 4, BigDecimal.ROUND_HALF_UP);
+        return n1.divide(n2, 4, RoundingMode.HALF_UP);
     }
 }

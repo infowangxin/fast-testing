@@ -1,11 +1,10 @@
 package com.nutcracker.service.lock;
 
+import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import javax.annotation.Resource;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -16,10 +15,9 @@ import java.util.concurrent.Executors;
  * @author 胡桃夹子
  * @date 2022-12-03 14:38
  */
+@Slf4j
 @SpringBootTest
 public class LockDemoServiceTest {
-
-    private static final Logger log = LoggerFactory.getLogger(LockDemoServiceTest.class);
 
     @Resource
     private LockDemoService lockDemoService;

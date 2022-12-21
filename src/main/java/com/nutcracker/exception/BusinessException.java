@@ -1,5 +1,7 @@
 package com.nutcracker.exception;
 
+import java.io.Serial;
+
 /**
  * 自定义异常类
  *
@@ -8,8 +10,8 @@ package com.nutcracker.exception;
  */
 public class BusinessException extends RuntimeException {
 
-
-    private static final long serialVersionUID = 2248546206040115304L;
+    @Serial
+    private static final long serialVersionUID = 5787303780395601031L;
 
     public BusinessException() {
 

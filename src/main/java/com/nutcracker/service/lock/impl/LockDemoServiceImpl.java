@@ -2,15 +2,14 @@ package com.nutcracker.service.lock.impl;
 
 import com.nutcracker.lock.annotation.RedissonLock;
 import com.nutcracker.service.lock.LockDemoService;
+import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.recipes.locks.InterProcessMutex;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -19,10 +18,9 @@ import java.util.concurrent.TimeUnit;
  * @author 胡桃夹子
  * @date 2022-12-03 14:28
  */
+@Slf4j
 @Service
 public class LockDemoServiceImpl implements LockDemoService {
-
-    private static final Logger log = LoggerFactory.getLogger(LockDemoServiceImpl.class);
 
     @Resource
     private RedissonClient redissonClient;

@@ -1,8 +1,6 @@
 package com.nutcracker.util;
 
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -12,8 +10,6 @@ import java.util.Date;
  * @date 2021-11-19 10:07
  */
 public class DateUtilTest {
-
-    private static final Logger LOG = LoggerFactory.getLogger(DateUtilTest.class);
 
     @Test
     public void format() {

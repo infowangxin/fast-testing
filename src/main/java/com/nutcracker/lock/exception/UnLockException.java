@@ -2,6 +2,8 @@ package com.nutcracker.lock.exception;
 
 import com.nutcracker.exception.BusinessException;
 
+import java.io.Serial;
+
 /**
  * <p>解锁运行时异常</p>
  *
@@ -9,6 +11,7 @@ import com.nutcracker.exception.BusinessException;
  */
 public class UnLockException extends BusinessException {
 
+    @Serial
     private static final long serialVersionUID = 8521984814937746047L;
 
     public UnLockException(String message) {

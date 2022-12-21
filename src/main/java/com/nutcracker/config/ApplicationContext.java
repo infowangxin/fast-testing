@@ -1,11 +1,10 @@
 package com.nutcracker.config;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jakarta.servlet.ServletContext;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.ServletContextAware;
 
-import javax.servlet.ServletContext;
 
 /**
  * 上下文设置
@@ -13,10 +12,9 @@ import javax.servlet.ServletContext;
  * @author 胡桃夹子
  * @date 2022/2/9 10:49
  */
+@Slf4j
 @Component
 public class ApplicationContext implements ServletContextAware {
-
-    private static final Logger log = LoggerFactory.getLogger(ApplicationContext.class);
 
     @Override
     public void setServletContext(ServletContext context) {

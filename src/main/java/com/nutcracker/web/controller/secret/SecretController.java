@@ -6,9 +6,9 @@ import com.nutcracker.enums.SecretTypeEnum;
 import com.nutcracker.exception.BusinessException;
 import com.nutcracker.service.secret.SecretService;
 import com.nutcracker.util.DateUtil;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -36,11 +35,10 @@ import java.util.Calendar;
 import java.util.List;
 
 //@Tag(name = "secret", description = "加密与解密相关接口")
+@Slf4j
 @Controller
 @RequestMapping("secret")
 public class SecretController {
-
-    private static final Logger LOG = LoggerFactory.getLogger(SecretController.class);
 
     @Autowired
     private SecretService secretService;
@@ -86,7 +84,7 @@ public class SecretController {
     @PostMapping(value = "batchExecute/{secretType}/{secretStrategy}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<byte[]> batchExecute(@RequestPart MultipartFile uploadFile, @PathVariable String secretType, @PathVariable String secretStrategy, HttpServletRequest request) {
         try {
-            LOG.info("# secretType={},secretStrategy={}", secretType, secretStrategy);
+            log.info("# secretType={},secretStrategy={}", secretType, secretStrategy);
             //跟踪下载是否完成，种下标记位
             request.getSession().removeAttribute(FLAG);
             //解析内容
@@ -108,7 +106,7 @@ public class SecretController {
             String ymd = DateUtil.dateToString(Calendar.getInstance().getTime(), "yyyyMMdd_HHmmss_SSS");
             byte[] resp = result.getBytes(StandardCharsets.UTF_8);
             String txtName = strategyEnum.name() + "_" + typeEnum.name() + "_" + ymd + ".txt";
-            LOG.info("# txtName={}", txtName);
+            log.info("# txtName={}", txtName);
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
             headers.add("content-disposition", "attachment;filename*=UTF-8''" + URLEncoder.encode(txtName, "UTF-8"));
@@ -116,11 +114,11 @@ public class SecretController {
             request.getSession().setAttribute(FLAG, "1");
             return new ResponseEntity<>(resp, headers, HttpStatus.OK);
         } catch (BusinessException e) {
-            LOG.error("# {}", e.getErrorMsg());
+            log.error("# {}", e.getErrorMsg());
             request.getSession().setAttribute(FLAG, "服务异常！");
             throw e;
         } catch (Exception e) {
-            LOG.error("# {}", e.getLocalizedMessage());
+            log.error("# {}", e.getLocalizedMessage());
             request.getSession().setAttribute(FLAG, "服务异常！");
             throw new BusinessException("服务异常！");
         }
@@ -136,7 +134,7 @@ public class SecretController {
     @PostMapping("execute/{secretType}/{secretStrategy}")
     @ResponseBody
     public String execute(@RequestParam("textString") String textString, @PathVariable String secretType, @PathVariable String secretStrategy) {
-        LOG.info("# textString={},secretType={},secretStrategy={}", textString, secretType, secretStrategy);
+        log.info("# textString={},secretType={},secretStrategy={}", textString, secretType, secretStrategy);
         String result = "";
         try {
             if (StringUtils.isNotBlank(textString)) {
@@ -151,7 +149,7 @@ public class SecretController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        LOG.info("{},{}", textString, result);
+        log.info("{},{}", textString, result);
         return result;
     }
 
@@ -166,7 +164,7 @@ public class SecretController {
         Object endFlag = request.getSession().getAttribute(FLAG);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("flag", endFlag);
-        LOG.debug("# 下载情况:{}", endFlag);
+        log.debug("# 下载情况:{}", endFlag);
         return jsonObject;
     }
 

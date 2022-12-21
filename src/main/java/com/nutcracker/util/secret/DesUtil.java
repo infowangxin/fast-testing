@@ -1,7 +1,6 @@
 package com.nutcracker.util.secret;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
@@ -17,9 +16,8 @@ import java.util.Base64;
  * @author 胡桃夹子
  * @date 2021/11/17 15:56
  */
+@Slf4j
 public class DesUtil {
-
-    private static final Logger LOG = LoggerFactory.getLogger(DesUtil.class);
 
     /**
      * 加密KEY,8个长度即可
@@ -92,7 +90,7 @@ public class DesUtil {
             String hexStr = byte2hex(encrypted);
             return string2base64(hexStr);
         } catch (Exception e) {
-            LOG.error("# 加密异常,data={},error msg={}", data, e.getLocalizedMessage());
+            log.error("# 加密异常,data={},error msg={}", data, e.getLocalizedMessage());
             throw new RuntimeException("加密失败");
         }
     }
@@ -113,7 +111,7 @@ public class DesUtil {
             byte[] original = cipher.doFinal(hexStr);
             return new String(original, StandardCharsets.UTF_8).trim();
         } catch (Exception e) {
-            LOG.error("# 解密异常,data={},error msg={}", data, e.getLocalizedMessage());
+            log.error("# 解密异常,data={},error msg={}", data, e.getLocalizedMessage());
             throw new RuntimeException("加密失败");
         }
     }

@@ -2,6 +2,8 @@ package com.nutcracker.lock.exception;
 
 import com.nutcracker.exception.BusinessException;
 
+import java.io.Serial;
+
 /**
  * <p>创建锁运行时异常</p>
  *
@@ -10,6 +12,7 @@ import com.nutcracker.exception.BusinessException;
  */
 public class BuildLockException extends BusinessException {
 
+    @Serial
     private static final long serialVersionUID = -8238014866385255218L;
 
     public BuildLockException(String message) {

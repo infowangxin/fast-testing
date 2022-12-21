@@ -20,6 +20,7 @@ import java.util.Map;
  *
  * @author 胡桃夹子
  */
+@SuppressWarnings({"unused", "SpellCheckingInspection", "AlibabaConstantFieldShouldBeUpperCase"})
 public class DateUtil {
 
     /**
@@ -212,7 +213,7 @@ public class DateUtil {
      *
      * @param dateString 日期字符串
      * @param pattern    format格式
-     * @return
+     * @return 日期
      */
     public static Date stringToDate(String dateString, String pattern) {
         if (StringUtils.isBlank(dateString)) {

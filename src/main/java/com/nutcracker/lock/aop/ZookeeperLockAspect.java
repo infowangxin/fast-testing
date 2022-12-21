@@ -3,6 +3,7 @@ package com.nutcracker.lock.aop;
 import com.nutcracker.exception.BusinessException;
 import com.nutcracker.lock.annotation.ZookeeperLock;
 import com.nutcracker.lock.util.SpringELUtil;
+import jakarta.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.recipes.locks.InterProcessMutex;
@@ -10,11 +11,8 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.HashMap;
@@ -29,8 +27,6 @@ import java.util.Map;
 @Aspect
 @Component
 public class ZookeeperLockAspect {
-
-    private static final Logger log = LoggerFactory.getLogger(ZookeeperLockAspect.class);
 
     @Resource
     private CuratorFramework curatorFramework;

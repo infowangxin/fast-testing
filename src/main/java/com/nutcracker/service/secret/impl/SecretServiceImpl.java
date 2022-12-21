@@ -5,6 +5,7 @@ import com.nutcracker.enums.SecretStrategyEnum;
 import com.nutcracker.service.secret.SecretService;
 import com.nutcracker.strategy.StrategyFactory;
 import com.nutcracker.strategy.secret.BaseStrategy;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import java.util.List;
  * @author 胡桃夹子
  * @date 2021-11-18 10:17
  */
+@Slf4j
 @Service
 public class SecretServiceImpl implements SecretService {
 

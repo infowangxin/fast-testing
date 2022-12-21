@@ -1,8 +1,7 @@
 package com.nutcracker.util.secret;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.crypto.Cipher;
 import java.nio.charset.StandardCharsets;
@@ -22,9 +21,8 @@ import java.security.spec.X509EncodedKeySpec;
  * @author 胡桃夹子
  * @date 2021/11/17 15:51
  */
+@Slf4j
 public class RsaUtil {
-
-    private static final Logger LOG = LoggerFactory.getLogger(RsaUtil.class);
 
     private final static String PUBLIC_KEY_STRING = "MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAIrN6qD1lqJ5QIljmpH7AxCocyy9RW8uWwM3dNATVzFw7UE2Kt+NzZFasRFIg/RxVfvMHhpQ8v12K9q8Vd9+m2cCAwEAAQ==";
     private final static String PRIVATE_KEY_STRING = "MIIBUwIBADANBgkqhkiG9w0BAQEFAASCAT0wggE5AgEAAkEAis3qoPWWonlAiWOakfsDEKhzLL1Fby5bAzd00BNXMXDtQTYq343NkVqxEUiD9HFV+8weGlDy/XYr2rxV336bZwIDAQABAkA4hQyrKhWCZxkuWI6SLsHawJzVdOSXFyscLjK0n4t7p8KF3Mxme3tJpH4tMw7r08newkH5EI7Aaha5gBD9nz2hAiEA3dZfMgJARoYQdy+0VxUOXpozdTpyHNdtgch0ctIXA6kCIQCgLhV6Vs86SfkXAPl+8TQi0DPx4lI5MnBuVHIwAsEQjwIgBeZgq8TRjs6b+3+CTVqbAjsZqUF/rXKxT+VT64XY5NkCIFhelELWOaVywhVK2FqMP7MlIkNEFRCxHw3/UK/kFRdJAiBC6NRLJe2N+YmK34Jqj0UqRe3gRldUsBLpFeDCX9dasA==";
@@ -49,11 +47,11 @@ public class RsaUtil {
             String privateKeyString = new String(Base64.encodeBase64((privateKey.getEncoded())));
             // 将公钥和私钥保存到Map
             //0表示公钥
-            LOG.info("publicKeyString:{}", publicKeyString);
+            log.info("publicKeyString:{}", publicKeyString);
             //1表示私钥
-            LOG.info("privateKeyString:{}", privateKeyString);
+            log.info("privateKeyString:{}", privateKeyString);
         } catch (Exception e) {
-            LOG.error("# 生成密钥对异常,error msg={}", e.getLocalizedMessage());
+            log.error("# 生成密钥对异常,error msg={}", e.getLocalizedMessage());
             throw new RuntimeException("生成密钥对失败");
         }
     }
@@ -76,7 +74,7 @@ public class RsaUtil {
             cipher.init(Cipher.ENCRYPT_MODE, pubKey);
             outStr = Base64.encodeBase64String(cipher.doFinal(str.getBytes(StandardCharsets.UTF_8)));
         } catch (Exception e) {
-            LOG.error("# 加密异常,data={},error msg={}", str, e.getLocalizedMessage());
+            log.error("# 加密异常,data={},error msg={}", str, e.getLocalizedMessage());
             throw new RuntimeException("加密失败");
         }
         return outStr;
@@ -102,7 +100,7 @@ public class RsaUtil {
             cipher.init(Cipher.DECRYPT_MODE, priKey);
             outStr = new String(cipher.doFinal(inputByte));
         } catch (Exception e) {
-            LOG.error("# 解密异常,data={},error msg={}", str, e.getLocalizedMessage());
+            log.error("# 解密异常,data={},error msg={}", str, e.getLocalizedMessage());
             throw new RuntimeException("解密失败");
         }
         return outStr;

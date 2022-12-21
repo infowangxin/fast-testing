@@ -2,11 +2,11 @@ package com.nutcracker.mapper.user;
 
 import com.alibaba.fastjson.JSON;
 import com.nutcracker.dto.UserDto;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
