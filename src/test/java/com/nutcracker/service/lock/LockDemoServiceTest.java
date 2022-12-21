@@ -1,9 +1,9 @@
 package com.nutcracker.service.lock;
 
-import com.nutcracker.BaseTest;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
 import java.util.concurrent.CountDownLatch;
@@ -16,7 +16,8 @@ import java.util.concurrent.Executors;
  * @author 胡桃夹子
  * @date 2022-12-03 14:38
  */
-public class LockDemoServiceTest extends BaseTest {
+@SpringBootTest
+public class LockDemoServiceTest {
 
     private static final Logger log = LoggerFactory.getLogger(LockDemoServiceTest.class);
 

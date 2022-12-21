@@ -6,15 +6,6 @@ import com.nutcracker.enums.SecretTypeEnum;
 import com.nutcracker.exception.BusinessException;
 import com.nutcracker.service.secret.SecretService;
 import com.nutcracker.util.DateUtil;
-import io.swagger.v3.oas.annotations.Hidden;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,7 +35,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-@Tag(name = "secret", description = "加密与解密相关接口")
+//@Tag(name = "secret", description = "加密与解密相关接口")
 @Controller
 @RequestMapping("secret")
 public class SecretController {
@@ -56,7 +47,7 @@ public class SecretController {
 
     private static final String FLAG = "endFlag";
 
-    @Hidden
+    //@Hidden
     @GetMapping("index")
     public String secretIndex() {
         return "secret_index";
@@ -85,13 +76,13 @@ public class SecretController {
         return list;
     }
 
-    @Operation(description = "多线程操作，加密解密操作，返回txt文件")
-    @Parameters({
-            @Parameter(name = "uploadFile", description = "待处理的附件(txt格式)"),
-            @Parameter(name = "secretType", description = "加密或解密的类型枚举：encrypt=加密,decrypt=解密", example = "encrypt"),
-            @Parameter(name = "secretStrategy", description = "加解密渠道枚举: RSA=RSA加解密;DES=DES加解密;DESede=DESede加解密;", example = "RSA"),
-    })
-    @ApiResponses(value = {@ApiResponse(description = "处理返回的txt文件", content = {@Content(mediaType = MediaType.APPLICATION_OCTET_STREAM_VALUE, schema = @Schema(implementation = ResponseEntity.class))})})
+    //@Operation(description = "多线程操作，加密解密操作，返回txt文件")
+    //@Parameters({
+    //        @Parameter(name = "uploadFile", description = "待处理的附件(txt格式)"),
+    //        @Parameter(name = "secretType", description = "加密或解密的类型枚举：encrypt=加密,decrypt=解密", example = "encrypt"),
+    //        @Parameter(name = "secretStrategy", description = "加解密渠道枚举: RSA=RSA加解密;DES=DES加解密;DESede=DESede加解密;", example = "RSA"),
+    //})
+    //@ApiResponses(value = {@ApiResponse(description = "处理返回的txt文件", content = {@Content(mediaType = MediaType.APPLICATION_OCTET_STREAM_VALUE, schema = @Schema(implementation = ResponseEntity.class))})})
     @PostMapping(value = "batchExecute/{secretType}/{secretStrategy}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<byte[]> batchExecute(@RequestPart MultipartFile uploadFile, @PathVariable String secretType, @PathVariable String secretStrategy, HttpServletRequest request) {
         try {
@@ -135,13 +126,13 @@ public class SecretController {
         }
     }
 
-    @Operation(description = "加密解密操作")
-    @ApiResponses(value = {@ApiResponse(description = "返回结果")})
-    @Parameters({
-            @Parameter(name = "textString", description = "待解密或加密操文本"),
-            @Parameter(name = "secretType", description = "加密或解密的类型枚举：encrypt=加密,decrypt=解密", example = "encrypt"),
-            @Parameter(name = "secretStrategy", description = "加解密渠道枚举: RSA=RSA加解密;DES=DES加解密;DESede=DESede加解密;", example = "RSA"),
-    })
+    //@Operation(description = "加密解密操作")
+    //@ApiResponses(value = {@ApiResponse(description = "返回结果")})
+    //@Parameters({
+    //        @Parameter(name = "textString", description = "待解密或加密操文本"),
+    //        @Parameter(name = "secretType", description = "加密或解密的类型枚举：encrypt=加密,decrypt=解密", example = "encrypt"),
+    //        @Parameter(name = "secretStrategy", description = "加解密渠道枚举: RSA=RSA加解密;DES=DES加解密;DESede=DESede加解密;", example = "RSA"),
+    //})
     @PostMapping("execute/{secretType}/{secretStrategy}")
     @ResponseBody
     public String execute(@RequestParam("textString") String textString, @PathVariable String secretType, @PathVariable String secretStrategy) {
@@ -167,7 +158,7 @@ public class SecretController {
     /**
      * 从session获取结束标识
      */
-    @Hidden
+    //@Hidden
     @ResponseBody
     @RequestMapping("getEndFlag")
     public JSONObject getEndFlag(HttpServletRequest request) {

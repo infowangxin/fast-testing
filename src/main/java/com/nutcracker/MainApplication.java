@@ -23,8 +23,7 @@ public class MainApplication {
     private static final Logger LOG = LoggerFactory.getLogger(MainApplication.class);
 
     public static void main(String[] args) {
-        SpringApplication springApplication = new SpringApplication(MainApplication.class);
-        springApplication.run(args);
+        SpringApplication.run(MainApplication.class, args);
         LOG.info(">>>>>>>>>>>>>>>>>>>> start successful <<<<<<<<<<<<<<<<<<<<");
     }
 
