@@ -11,7 +11,7 @@ clusterServersConfig:
   password: null
   subscriptionsPerConnection: 5
   clientName: "centa-esapi-server"
-  loadBalancer: !<org.redisson.connection.balancer.RoundRobinLoadBalancer> {}
+  loadBalancer: !<org.redisson.connection.balancer.RoundRobinLoadBalancer> { }
   subscriptionConnectionMinimumIdleSize: 1
   subscriptionConnectionPoolSize: 25
   slaveConnectionMinimumIdleSize: 12
@@ -34,5 +34,5 @@ clusterServersConfig:
 threads: 8
 nettyThreads: 16
 #codec: !<org.redisson.codec.FstCodec> {}
-codec: !<org.redisson.codec.SerializationCodec> {}
+codec: !<org.redisson.codec.SerializationCodec> { }
 transportMode: "NIO"

@@ -42,8 +42,11 @@
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
 
-        <!-- mybatis-plus 与 springboot3.x 有兼容性问题，mybatis-plus快照版本已经修复，需要到快照仓库下载 -->
-        <!-- https://oss.sonatype.org/content/repositories/snapshots -->
+        <!--
+        mybatis-plus 与 springboot3.x 有兼容性问题，mybatis-plus快照版本已经修复，需要到快照仓库下载
+        官方文档：https://baomidou.com
+        快照仓库地址：https://oss.sonatype.org/content/repositories/snapshots
+        -->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
@@ -103,6 +106,13 @@
         <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
+        </dependency>
+
+        <!-- https://hutool.cn/docs -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.8.10</version>
         </dependency>
 
         <!-- json -->

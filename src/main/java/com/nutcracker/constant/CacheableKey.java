@@ -17,7 +17,7 @@ public class CacheableKey {
     public static final String SYS_USER = "SysUser";
 
     /**
-     *  1周
+     * 1周
      */
     public static final long CACHE_1_WEEK = 604800L;
     /**

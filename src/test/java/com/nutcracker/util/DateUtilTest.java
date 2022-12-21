@@ -15,7 +15,7 @@ public class DateUtilTest {
     public void format() {
         try {
             Date date = DateUtil.parse(Calendar.getInstance().getTime());
-            System.out.println(DateUtil.dateToString(date,DateUtil.fm_yyyy_MM_dd_HHmmss));
+            System.out.println(DateUtil.dateToString(date, DateUtil.fm_yyyy_MM_dd_HHmmss));
         } catch (Exception e) {
             e.printStackTrace();
         }
