@@ -27,7 +27,12 @@
         <oss.snapshot>https://oss.sonatype.org/content/repositories/snapshots</oss.snapshot>
     </properties>
 
-    <!-- repositorie 表示下载项目依赖库文件的maven仓库地址 -->
+    <!--
+    设置仓库的方式有两种，一种是在项目最顶级pom.xml中设置，另一种是在settings.xml中设置。
+    寻找jar的基本优先级顺序：
+    本地仓库 > settings.xml的profile的仓库 > pom.xml的profile的仓库 > pom.xml的仓库 > 中央仓库
+    -->
+    <!-- repository 表示下载项目依赖库文件的maven仓库地址 -->
     <repositories>
         <repository>
             <id>nexus</id>
@@ -192,6 +197,7 @@
         Curator 2.x.x-兼容两个zk 3.4.x 和zk 3.5.x
         Curator 3.x.x-兼容兼容zk 3.5
         -->
+        <!-- suppress Vulnerable declared dependency -->
         <dependency>
             <groupId>org.apache.curator</groupId>
             <artifactId>curator-framework</artifactId>
