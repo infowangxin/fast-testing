@@ -19,9 +19,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * XXX
+ * zookeeper分布式锁切面
  *
- * @author wangxin65
+ * @author 胡桃夹子
  * @date 2022-12-04 20:05
  */
 @Aspect
