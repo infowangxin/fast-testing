@@ -1,6 +1,6 @@
 package com.nutcracker.strategy.secret;
 
-import com.nutcracker.constant.Constant;
+import com.nutcracker.constant.Constants;
 import com.nutcracker.enums.SecretStrategyEnum;
 import com.nutcracker.strategy.StrategyFactory;
 import com.nutcracker.util.FackNoUtil;
@@ -116,7 +116,7 @@ public abstract class BaseStrategy {
             // 执行其他操作
             LOG.info("******************* 操作结束");
 
-            StringJoiner joiner = new StringJoiner(Constant.BR);
+            StringJoiner joiner = new StringJoiner(Constants.BR);
             for (Future<String> future : futureList) {
                 joiner.add(future.get());
             }
@@ -154,7 +154,7 @@ public abstract class BaseStrategy {
          * 加密
          */
         private String en() {
-            StringJoiner joiner = new StringJoiner(Constant.BR);
+            StringJoiner joiner = new StringJoiner(Constants.BR);
             AtomicInteger atomic = new AtomicInteger(1);
             int size = list.size();
             for (String temp : list) {
@@ -169,7 +169,7 @@ public abstract class BaseStrategy {
          * 解密
          */
         private String de() {
-            StringJoiner joiner = new StringJoiner(Constant.BR);
+            StringJoiner joiner = new StringJoiner(Constants.BR);
             AtomicInteger atomic = new AtomicInteger(1);
             int size = list.size();
             for (String temp : list) {
