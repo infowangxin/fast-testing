@@ -193,11 +193,10 @@
         </dependency>
 
         <!--
-        Curator 存在版本兼容问题
+        版本兼容问题
         Curator 2.x.x-兼容两个zk 3.4.x 和zk 3.5.x
         Curator 3.x.x-兼容兼容zk 3.5
         -->
-        <!-- suppress Vulnerable declared dependency -->
         <dependency>
             <groupId>org.apache.curator</groupId>
             <artifactId>curator-framework</artifactId>
