@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{/static/css/layui/layui.css}" rel="stylesheet">
+    <link th:href="@{/static/css/layui/admin.css}" rel="stylesheet">
+    <link th:href="@{/static/css/font-awesome.min.css}" rel="stylesheet">
+    <style type="text/css">
+        .text-danger{
+            color: #dd6161;
+        }
+        .text-success{
+            color: #5FB878;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-fluid" id="app">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-lg4">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="fa fa-windows"></i> CPU信息</div>
+                <div class="layui-card-body">
+                    <table class="layui-table layui-text">
+                        <thead>
+                        <tr>
+                            <th>属性</th>
+                            <td>值</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>核心数</td>
+                            <td>{{cpuInfo.cpuNum}}</td>
+                        </tr>
+                        <tr>
+                            <td>用户使用率</td>
+                            <td :class="cpuColor">{{cpuInfo.used}}%</td>
+                        </tr>
+                        <tr>
+                            <td>系统使用率</td>
+                            <td>{{cpuInfo.sys}}%</td>
+                        </tr>
+                        <tr>
+                            <td>当前空闲率</td>
+                            <td>{{cpuInfo.free}}%</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-lg4">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="fa fa-microchip"></i> 内存信息</div>
+                <div class="layui-card-body">
+                    <table class="layui-table layui-text">
+                        <thead>
+                        <tr>
+                            <th>属性</th>
+                            <td>内存</td>
+                            <td>JVM</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>总内存</td>
+                            <td>{{memInfo.total}}GB</td>
+                            <td>{{jvmInfo.max}}MB</td>
+                        </tr>
+                        <tr>
+                            <td>已用内存</td>
+                            <td>{{memInfo.used}}GB</td>
+                            <td>{{jvmInfo.total}}MB</td>
+                        </tr>
+                        <tr>
+                            <td>剩余内存</td>
+                            <td>{{memInfo.free}}GB</td>
+                            <td>{{jvmInfo.free}}MB</td>
+                        </tr>
+                        <tr>
+                            <td>使用率</td>
+                            <td :class="memColor">{{memInfo.usage}}%</td>
+                            <td :class="jvmColor">{{jvmInfo.usage}}%</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-lg4">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="fa fa-free-code-camp"></i> 堆信息</div>
+                <div class="layui-card-body">
+                    <table class="layui-table layui-text">
+                        <thead>
+                        <tr>
+                            <th>属性</th>
+                            <td>值</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>初始大小</td>
+                            <td>{{heapInfo.heapInit}}MB</td>
+                        </tr>
+                        <tr>
+                            <td>最大内存</td>
+                            <td>{{heapInfo.heapMax}}MB</td>
+                        </tr>
+                        <tr>
+                            <td>已用内存</td>
+                            <td>{{heapInfo.heapUsed}}MB</td>
+                        </tr>
+                        <tr>
+                            <td>可用内存</td>
+                            <td>{{heapInfo.heapCommitted}}MB</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-lg12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="fa fa-envira"></i> JAVA虚拟机信息</div>
+                <div class="layui-card-body">
+                    <table class="layui-table layui-text">
+                        <tbody>
+                        <tr>
+                            <td class="layui-table-header">Jvm名称</td>
+                            <td>{{jvmInfo.name}}</td>
+                            <td class="layui-table-header">Java版本</td>
+                            <td>{{jvmInfo.version}}</td>
+                        </tr>
+                        <tr>
+                            <td class="layui-table-header">启动时间</td>
+                            <td>{{jvmInfo.startTime}}</td>
+                            <td class="layui-table-header">运行时长</td>
+                            <td>{{jvmInfo.runTime}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="1" class="layui-table-header">安装路径</td>
+                            <td colspan="3">{{jvmInfo.home}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="1" class="layui-table-header">项目路径</td>
+                            <td colspan="3">{{sysInfo.userDir}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-lg12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="fa fa-server"></i> 服务器信息</div>
+                <div class="layui-card-body">
+                    <table class="layui-table layui-text">
+                        <tbody>
+                        <tr>
+                            <td class="layui-table-header">服务器名称</td>
+                            <td>{{sysInfo.computerName}}</td>
+                            <td class="layui-table-header">操作系统</td>
+                            <td>{{sysInfo.osName}}</td>
+                        </tr>
+                        <tr>
+                            <td class="layui-table-header">服务器IP</td>
+                            <td>{{sysInfo.computerIp}}</td>
+                            <td class="layui-table-header">系统架构</td>
+                            <td>{{sysInfo.osArch}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-lg12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="fa fa-folder"></i> 磁盘信息</div>
+                <div class="layui-card-body">
+                    <table class="layui-table layui-text">
+                        <thead>
+                        <tr>
+                            <th>盘符路径</th>
+                            <th>文件系统</th>
+                            <th>盘符类型</th>
+                            <th>总大小</th>
+                            <th>可用大小</th>
+                            <th>已用大小</th>
+                            <th>已用百分比</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="sysFileInfo in sysFileInfoList">
+                            <td>{{sysFileInfo.dirName}}</td>
+                            <td>{{sysFileInfo.typeName}}</td>
+                            <td>{{sysFileInfo.sysTypeName}}</td>
+                            <td>{{sysFileInfo.total}}</td>
+                            <td>{{sysFileInfo.free}}</td>
+                            <td>{{sysFileInfo.used}}</td>
+                            <td>{{sysFileInfo.usage}}%</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script th:inline="javascript">
+    var context = [[@{/}]];
+</script>
+<script th:src="@{/static/js/jquery.1.12.4.min.js}"></script>
+    <script th:src="@{/static/js/layui/layui.js}"></script>
+    <script th:src="@{/static/js/vue.2.6.11.js}"></script>
+    <script type="text/javascript">
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                timer : '',
+                sysFileInfoList:'',
+                sysInfo:'',
+                cpuInfo:'',
+                heapInfo:'',
+                jvmInfo:'',
+                memInfo:'',
+                cpuColor: '',
+                memColor:'',
+                jvmColor:''
+            },
+            methods: {
+                getServerDynamicInfo: function () {
+                    $.ajax({
+                        url: context +'system/rest/getServerDynamicInfo',
+                        type: 'GET',
+                        success: function (res) {
+                            vm.cpuInfo = res.data.cpuInfo;
+                            if (vm.cpuInfo.used > 80){
+                                vm.cpuColor = 'text-danger'
+                            }else {
+                                vm.cpuColor = 'text-success'
+                            }
+                            vm.heapInfo = res.data.heapInfo;
+                            vm.jvmInfo = res.data.jvmInfo;
+                            if (vm.jvmInfo.usage > 80){
+                                vm.jvmColor = 'text-danger'
+                            }else {
+                                vm.jvmColor = 'text-success'
+                            }
+                            vm.memInfo = res.data.memInfo;
+                            if (vm.memInfo.usage > 80){
+                                vm.memColor = 'text-danger'
+                            }else {
+                                vm.memColor = 'text-success'
+                            }
+                        }
+                    })
+                }
+            },
+            mounted: function () {
+                this.getServerDynamicInfo();
+                this.timer = setInterval(function () {
+                    vm.getServerDynamicInfo();
+                },5000);
+                $.ajax({
+                    url: context +'system/rest/getServerStaticInfo',
+                    type: 'GET',
+                    success: function (res) {
+                        vm.sysFileInfoList = res.data.sysFileInfo;
+                        vm.sysInfo = res.data.sysInfo;
+                    }
+                });
+
+            },
+            beforeDestroy: function() {
+
+            }
+        });
+    </script>
+</body>
+</html>

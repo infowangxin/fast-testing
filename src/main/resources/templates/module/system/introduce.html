@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{/static/css/layui/layui.css}" rel="stylesheet">
+    <link th:href="@{/static/css/layui/admin.css}" rel="stylesheet">
+    <link th:href="@{/static/css/v-charts/style.min.css}" rel="stylesheet">
+</head>
+<body>
+<div class="layui-fluid" id="app">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-lg8 layui-col-md7">
+            <div class="layui-card">
+                <div class="layui-card-header">更新日志</div>
+                <div class="layui-card-body">
+                    <ul class="layui-timeline">
+                        <li class="layui-timeline-item">
+                            <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                            <div class="layui-timeline-content layui-text">
+                                <h3 class="layui-timeline-title">
+                                    thyme-boot
+                                    <small>符合企业级开发基础权限管理系统</small>&emsp;
+                                    <span class="layui-badge-rim">2020-01-15</span>
+                                </h3>
+                                <ul>
+                                    <li class="text-danger">零spring xml配置，简洁的配置，独特的开发体验</li>
+                                    <li class="text-danger">提供用户，权限，日志，监控、研发工具等8个功能</li>
+                                    <li class="text-danger">防止XSS攻击,通过XssFilter类对所有的输入的非法字符串进行过滤以及替换</li>
+                                    <li class="text-danger">控制器层统一的异常拦截机制，@ControllerAdvice统一对异常拦截</li>
+                                    <li class="text-danger">前端使用vue,数据双向绑定，使用element ui组件化前端开发方便</li>
+                                    <li class="text-danger">spring session 共享session放入Redis中利于多集群化部署</li>
+                                    <li class="text-danger">完善监控体系，支持去服务器信息监控、driud监控</li>
+                                    <li class="text-danger">简化多数据源配置，简化mybatis-plus的配置</li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-lg4 layui-col-md5">
+            <div class="layui-card">
+                <div class="layui-card-header">项目介绍</div>
+                <div class="layui-card-body">
+                    <table class="layui-table layui-text">
+                        <colgroup>
+                            <col width="100">
+                            <col>
+                        </colgroup>
+                        <tbody>
+                        <tr>
+                            <td>项目名称</td>
+                            <td>thyme-boot基础权限快速开发平台</td>
+                        </tr>
+                        <tr>
+                            <td>开源版本</td>
+                            <td>thyme v1.0</td>
+                        </tr>
+                        <tr>
+                            <td>gitee地址</td>
+                            <td><a href="https://gitee.com/thyme-boot/thyme-boot" target="_blank">https://gitee.com/thyme-boot/thyme-boot</a></td>
+                        </tr>
+                        <tr>
+                            <td>主要特色</td>
+                            <td>开源 / 简洁 / 易上手 /</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="layui-card">
+                <div class="layui-card-header">后前端框架</div>
+                <div class="layui-card-body">
+                    <table class="layui-table layui-text">
+                        <colgroup>
+                            <col width="100">
+                            <col>
+                        </colgroup>
+                        <tbody>
+                        <tr>
+                            <td>后端核心框架</td>
+                            <td>Spring Boot</td>
+                        </tr>
+                        <tr>
+                            <td>持久层</td>
+                            <td><a href="http://mp.baomidou.com" target="_blank">MyBatis Plus</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>权限框架</td>
+                            <td>Spring Security
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>数据库</td>
+                            <td>支持Mysql、Oracle、Postgre SQL、Sql Server</td>
+                        </tr>
+                        <tr>
+                            <td>缓存</td>
+                            <td>Redis</td>
+                        </tr>
+                        <tr>
+                            <td>前端核心框架</td>
+                            <td><a href="https://cn.vuejs.org/" target="_blank">Vue2.0</a></td>
+                        </tr>
+                        <tr>
+                            <td>前端布局</td>
+                            <td><a href="https://www.layui.com/" target="_blank">Layui 2.X</a></td>
+                        </tr>
+                        <tr>
+                            <td>前端Vue组件</td>
+                            <td><a href="https://element.eleme.cn/#/zh-CN" target="_blank">element ui</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script th:src="@{/static/js/layui/layui.js}"></script>
+</body>
+</html>

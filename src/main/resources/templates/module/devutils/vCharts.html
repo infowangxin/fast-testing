@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{/static/css/layui/layui.css}" rel="stylesheet">
+    <link th:href="@{/static/css/layui/admin.css}" rel="stylesheet">
+    <link th:href="@{/static/css/v-charts/style.min.css}" rel="stylesheet">
+</head>
+<body>
+<div class="layui-fluid" id="app">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-sm6">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    折线图
+                </div>
+                <div class="layui-card-body">
+                    <template>
+                        <ve-line :data="lineChartData" :settings="lineChartSettings"></ve-line>
+                    </template>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-sm6">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    柱状图
+                </div>
+                <div class="layui-card-body">
+                    <template>
+                        <ve-histogram :data="histogramChartData" :settings="histogramChartSettings"></ve-histogram>
+                    </template>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-sm6">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    条形图
+                </div>
+                <div class="layui-card-body">
+                    <template>
+                        <ve-bar :data="barChartData" :settings="barChartSettings"></ve-bar>
+                    </template>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-sm6">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    饼图
+                </div>
+                <div class="layui-card-body">
+                    <template>
+                        <ve-pie :data="pieChartData" :settings="pieChartSettings"></ve-pie>
+                    </template>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-sm6">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    环图
+                </div>
+                <div class="layui-card-body">
+                    <template>
+                        <ve-ring :data="ringChartData" :settings="ringChartSettings"></ve-ring>
+                    </template>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-col-sm6">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    瀑布图
+                </div>
+                <div class="layui-card-body">
+                    <template>
+                        <ve-waterfall :data="waterfallChartData" :settings="waterfallChartSettings"></ve-waterfall>
+                    </template>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-col-sm6">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    漏斗图
+                </div>
+                <div class="layui-card-body">
+                    <template>
+                        <ve-funnel :data="funnelChartData" :settings="funnelChartSettings"></ve-funnel>
+                    </template>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-col-sm6">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    雷达图
+                </div>
+                <div class="layui-card-body">
+                    <template>
+                        <ve-radar :data="radarChartData" :settings="radarChartSettings"></ve-radar>
+                    </template>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-col-sm6">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    地图
+                </div>
+                <div class="layui-card-body">
+                    <template>
+                        <ve-map :data="mapChartData" :settings="mapChartSettings"></ve-map>
+                    </template>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-col-sm6">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    散点图
+                </div>
+                <div class="layui-card-body">
+                    <template>
+                        <ve-scatter :data="scatterChartData" :settings="scatterChartSettings"></ve-scatter>
+                    </template>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-col-sm6">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    K线图
+                </div>
+                <div class="layui-card-body">
+                    <template>
+                        <ve-candle :data="candleChartData" :settings="candleChartSettings"></ve-candle>
+                    </template>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-col-sm6">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    仪表盘
+                </div>
+                <div class="layui-card-body">
+                    <template>
+                        <ve-gauge :data="gaugeChartData" :settings="gaugeChartSettings"></ve-gauge>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/static/js/layui/layui.js}"></script>
+<script th:src="@{/static/js/vue.2.6.11.js}"></script>
+<script th:src="@{/static/js/v-charts/v-charts.min.js}"></script>
+<script th:src="@{/static/js/v-charts/index.min.js}"></script>
+<script th:src="@{/static/js/modules/devutils/vcharts.js}"></script>
+</body>
+</html>

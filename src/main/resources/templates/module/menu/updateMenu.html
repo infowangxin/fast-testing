@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <link th:href="@{/static/css/layui/layui.css}" rel="stylesheet">
+        <link th:href="@{/static/css/style.css}" rel="stylesheet">
+        <link th:href="@{/static/css/bootstrap.min.css}" rel="stylesheet">
+        <link th:href="@{/static/css/layer/layer.css}" rel="stylesheet">
+        <link th:href="@{/static/css/layui/admin.css}" rel="stylesheet">
+        <link th:href="@{/static/css/element-ui.2.13.0.css}" rel="stylesheet">
+        <link th:href="@{/static/css/font-awesome.min.css}" rel="stylesheet">
+    </head>
+    <body class="white-bg">
+        <div class="wrapper wrapper-content animated fadeInRight" id="app">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content">
+                            <form class="form-horizontal m-t" id="signupForm">
+                                <input id="id" name="id" type="hidden" th:value="${sysMenu.id}">
+                                <input id="parentId" name="parentId" type="hidden" th:value="${sysMenu.parentId}">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">菜单名称：</label>
+                                    <div class="col-sm-8">
+                                        <input id="menuName" name="menuName" class="form-control"
+                                               type="text" th:value="${sysMenu.menuName}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">菜单别名：</label>
+                                    <div class="col-sm-8">
+                                        <input id="menuCode" name="menuCode" class="form-control"
+                                               type="text" th:value="${sysMenu.menuCode}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">菜单层级：</label>
+                                    <div class="col-sm-8">
+                                        <input id="menuLevels" name="isShow" type="hidden"
+                                               th:value="${sysMenu.menuLevel}">
+                                        <select id="menuLevel" th:value="${sysMenu.menuLevel}" name="modules" lay-verify="required" lay-search="" style="width: 235px;height: 33.9px;border: 1px solid #ccc;border-radius: 4px;">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group" id="menuNames" style="display: none"></div>
+                                <div class="form-group" id="menuHrefs" style="display: none">
+                                    <label class="col-sm-3 control-label">菜单链接：</label>
+                                    <div class="col-sm-8">
+                                        <input id="menuHref" name="menuHref" class="form-control"
+                                               type="text" th:value="${sysMenu.menuHref}">
+                                    </div>
+                                </div>
+                                <div class="form-group" id="menuIcons" style="display: none">
+                                    <label class="col-sm-3 control-label">菜单图标：</label>
+                                    <div class="col-sm-8">
+                                        <input id="menuIcon" name="menuIcon" class="form-control"  placeholder="菜单图标页面选择图标"
+                                               type="text" th:value="${sysMenu.menuIcon}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">排序：</label>
+                                    <div class="col-sm-8">
+                                        <input id="menuWeight" name="menuWeight" class="form-control"
+                                               type="text" th:value="${sysMenu.menuWeight}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">状态：</label>
+                                    <div class="col-sm-8">
+                                        <input id="isShow" name="isShow" type="hidden"
+                                               th:value="${sysMenu.isShow}">
+                                        <div class="radio-beauty-container" id="Show">
+                                            <label>
+                                                <span class="radio-name">显示</span>
+                                                <input type="radio" value="1" name="isShow" id="xs" hidden/>
+                                                <label for="xs" class="radio-beauty"></label>
+                                            </label>
+                                            <label>
+                                                <span class="radio-name">隐藏</span>
+                                                <input type="radio" value="0" name="isShow" id="yc" hidden/>
+                                                <label for="yc" class="radio-beauty"></label>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-8 col-sm-offset-3">
+                                        <button type="submit" class="btn btn-primary">提交</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script th:inline="javascript">
+            var context = [[@{
+                /}]];
+        </script>
+        <script th:src="@{/static/js/jquery.1.12.4.min.js}"></script>
+        <script th:src="@{/static/js/jquery.validate.min.js}"></script>
+        <script th:src="@{/static/js/messages_zh.min.js}"></script>
+        <script th:src="@{/static/js/layui/layui.js}"></script>
+        <script th:src="@{/static/js/layui/lay/modules/layer.js}"></script>
+        <script th:src="@{/static/js/vue.2.6.11.js}"></script>
+        <script th:src="@{/static/js/element-ui.2.13.0.js}"></script>
+        <script th:src="@{/static/js/modules/menu/updateMenu.js}"></script>
+    </body>
+</html>

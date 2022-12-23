@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{/static/css/layui/layui.css}" rel="stylesheet">
+    <link th:href="@{/static/css/layui/admin.css}" rel="stylesheet">
+    <link th:href="@{/static/css/v-charts/style.min.css}" rel="stylesheet">
+</head>
+<body>
+<div class="layui-fluid" id="app">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-sm6 layui-col-md3">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    访问量
+                    <span class="layui-badge layui-bg-red layuiadmin-badge">日</span>
+                </div>
+                <div class="layui-card-body layuiadmin-card-list">
+                    <p class="layuiadmin-big-font">92378</p>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-sm6 layui-col-md3">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    用户量
+                    <span class="layui-badge layui-bg-cyan layuiadmin-badge">总</span>
+                </div>
+                <div class="layui-card-body layuiadmin-card-list">
+                    <p class="layuiadmin-big-font">13902</p>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-sm6 layui-col-md3">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    新用户
+                    <span class="layui-badge layui-bg-blue layuiadmin-badge">周</span>
+                </div>
+                <div class="layui-card-body layuiadmin-card-list">
+                    <p class="layuiadmin-big-font">2305</p>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-sm6 layui-col-md3">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    接口调用量
+                    <span class="layui-badge layui-bg-orange layuiadmin-badge">月</span>
+                </div>
+                <div class="layui-card-body layuiadmin-card-list">
+                    <p class="layuiadmin-big-font">56,866</p>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-sm12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    访问量
+                </div>
+                <div class="layui-card-body">
+                    <div class="layui-row">
+                        <div class="layui-col-sm12">
+                            <template>
+                                <ve-line :data="chartData" :settings="chartSettings"></ve-line>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/static/js/layui/layui.js}"></script>
+<script th:src="@{/static/js/vue.2.6.11.js}"></script>
+<script th:src="@{/static/js/v-charts/v-charts.min.js}"></script>
+<script th:src="@{/static/js/v-charts/index.min.js}"></script>
+<script type="text/javascript">
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            chartData: {
+                columns: ['日期', '用户访问量', '接口调用量'],
+                rows: [
+                    {'日期': '1月', '用户访问量': 1393, '接口调用量': 345},
+                    {'日期': '2月', '用户访问量': 3530, '接口调用量': 6789},
+                    {'日期': '3月', '用户访问量': 2923, '接口调用量': 2345},
+                    {'日期': '4月', '用户访问量': 1723, '接口调用量': 1423},
+                    {'日期': '5月', '用户访问量': 3792, '接口调用量': 7890},
+                    {'日期': '6月', '用户访问量': 4593, '接口调用量': 4293},
+                    {'日期': '7月', '用户访问量': 3678, '接口调用量': 1093},
+                    {'日期': '8月', '用户访问量': 789, '接口调用量': 3456},
+                    {'日期': '9月', '用户访问量': 5689, '接口调用量': 7890},
+                    {'日期': '10月', '用户访问量': 3241, '接口调用量': 8907},
+                    {'日期': '11月', '用户访问量': 8765, '接口调用量': 9012},
+                    {'日期': '12月', '用户访问量': 6543, '接口调用量': 1023}
+                ]
+            },
+            chartSettings: {
+                metrics: ['用户访问量', '接口调用量'],
+                dimension: ['日期']
+            }
+        }
+    });
+</script>
+</body>
+</html>

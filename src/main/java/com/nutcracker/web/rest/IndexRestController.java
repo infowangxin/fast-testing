@@ -1,6 +1,5 @@
 package com.nutcracker.web.rest;
 
-import cn.hutool.core.util.IdUtil;
 import com.nutcracker.constant.Constants;
 import com.nutcracker.entity.ApiResponse;
 import com.nutcracker.entity.sys.SysUser;
@@ -8,9 +7,9 @@ import com.nutcracker.service.sys.RedisService;
 import com.nutcracker.service.sys.SysUserService;
 import com.nutcracker.util.RedisUtils;
 import com.nutcracker.util.SecurityUtils;
-import com.nutcracker.vo.ImgResult;
-import com.wf.captcha.ArithmeticCaptcha;
 import jakarta.annotation.Resource;
+import c.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -57,19 +56,23 @@ public class IndexRestController {
     @Value("${loginCode.digit}")
     private Integer digit;
 
+    @GetMapping("/captcha")
+    public void captcha(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        com.wf.captcha.utils.CaptchaUtil.out(request, response);
+    }
     /**
      * 获取验证码
      */
-    @GetMapping("/code")
-    public ImgResult getCode() {
-        // 算术类型 https://gitee.com/whvse/EasyCaptcha
-        ArithmeticCaptcha captcha = new ArithmeticCaptcha(width, height, digit);
-        // 获取运算的结果
-        String result = captcha.text();
-        String uuid = IdUtil.simpleUUID();
-        redisService.saveCode(uuid, result);
-        return new ImgResult(captcha.toBase64(), uuid);
-    }
+    //@GetMapping("/code")
+    //public ImgResult getCode() {
+    //    // 算术类型 https://gitee.com/whvse/EasyCaptcha
+    //    ArithmeticCaptcha captcha = new ArithmeticCaptcha(width, height, digit);
+    //    // 获取运算的结果
+    //    String result = captcha.text();
+    //    String uuid = IdUtil.simpleUUID();
+    //    redisService.saveCode(uuid, result);
+    //    return new ImgResult(captcha.toBase64(), uuid);
+    //}
 
     @PostMapping("/updatePassword")
     public ApiResponse updatePassword(@RequestParam("oldPass") String oldPass,

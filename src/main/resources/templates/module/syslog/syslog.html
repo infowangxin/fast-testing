@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <link th:href="@{/static/css/layui/layui.css}" rel="stylesheet">
+        <link th:href="@{/static/css/style.css}" rel="stylesheet">
+        <link th:href="@{/static/css/bootstrap.min.css}" rel="stylesheet">
+        <link th:href="@{/static/css/layer/layer.css}" rel="stylesheet">
+        <link th:href="@{/static/css/layui/admin.css}" rel="stylesheet">
+        <link th:href="@{/static/css/element-ui.2.13.0.css}" rel="stylesheet">
+        <link th:href="@{/static/css/font-awesome.min.css}" rel="stylesheet">
+    </head>
+    <body>
+        <div class="layui-fluid" id="app">
+            <div class="layui-row layui-col-space15">
+                <div class="layui-col-sm12 layui-col-md12 layui-col-lg12">
+                    <div class="layui-card">
+                        <span style="margin-left: 92%" @click="reload()" class="btn btn-primary">刷新</span>
+                        <div class="layui-card-body">
+                            <el-table
+                                    :data="tableData"
+                                    style="width: 100%;margin-bottom: 20px;"
+                                    row-key="id"
+                                    border
+                                    default-expand-all>
+                                <el-table-column
+                                        prop="username"
+                                        label="登录用户名"
+                                        align="center">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="ipAddress"
+                                        label="登录IP"
+                                        align="center">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="ipSource"
+                                        label="IP地址"
+                                        align="center">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="browserName"
+                                        label="浏览器名称"
+                                        align="center">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="systemName"
+                                        label="设备名称"
+                                        align="center">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="message"
+                                        label="日志信息"
+                                        align="center">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="createDate"
+                                        label="创建时间"
+                                        align="center">
+                                </el-table-column>
+                            </el-table>
+                            <el-pagination
+                                    background
+                                    @size-change="handleSizeChange"
+                                    @current-change="handleCurrentChange"
+                                    layout="prev,pager,next,sizes"
+                                    :page-sizes="[5, 10, 15, 20]"
+                                    :page-size="page_size"
+                                    :current-page="current_page"
+                                    :total="total">
+                            </el-pagination>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script th:inline="javascript">
+            var context = [[@{
+                /}]];
+        </script>
+        <script th:src="@{/static/js/jquery.1.12.4.min.js}"></script>
+        <script th:src="@{/static/js/layui/layui.js}"></script>
+        <script th:src="@{/static/js/layui/lay/modules/layer.js}"></script>
+        <script th:src="@{/static/js/vue.2.6.11.js}"></script>
+        <script th:src="@{/static/js/element-ui.2.13.0.js}"></script>
+        <script th:src="@{/static/js/modules/syslog/syslog.js}"></script>
+    </body>
+</html>
