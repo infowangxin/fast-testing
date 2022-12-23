@@ -1,17 +1,16 @@
 package com.nutcracker.web.rest;
 
 import cn.hutool.core.util.IdUtil;
-import com.thyme.common.base.ApiResponse;
-import com.thyme.common.base.Constants;
-import com.thyme.common.utils.RedisUtils;
-import com.thyme.common.utils.SecurityUtils;
-import com.thyme.system.entity.SysUser;
-import com.thyme.system.service.RedisService;
-import com.thyme.system.service.SysUserService;
-import com.thyme.system.vo.ImgResult;
+import com.nutcracker.constant.Constants;
+import com.nutcracker.entity.ApiResponse;
+import com.nutcracker.entity.sys.SysUser;
+import com.nutcracker.service.sys.RedisService;
+import com.nutcracker.service.sys.SysUserService;
+import com.nutcracker.util.RedisUtils;
+import com.nutcracker.util.SecurityUtils;
+import com.nutcracker.vo.ImgResult;
 import com.wf.captcha.ArithmeticCaptcha;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -23,20 +22,22 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Date;
 
 /**
- * @author thyme
- * @ClassName IndexRestController
- * @Description TODO
- * @Date 2019/12/17 20:18
+ * IndexRestController
+ *
+ * @author 胡桃夹子
+ * @date 2022/12/23 10:39
  */
 @RestController
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class IndexRestController {
 
-    private final RedisService redisService;
+    @Resource
+    private RedisService redisService;
 
-    private final RedisUtils redisUtils;
+    @Resource
+    private RedisUtils redisUtils;
 
-    private final SysUserService sysUserService;
+    @Resource
+    private SysUserService sysUserService;
 
     /**
      * 验证码 宽度
@@ -62,38 +63,38 @@ public class IndexRestController {
     @GetMapping("/code")
     public ImgResult getCode() {
         // 算术类型 https://gitee.com/whvse/EasyCaptcha
-        ArithmeticCaptcha captcha = new ArithmeticCaptcha(width, height,digit);
+        ArithmeticCaptcha captcha = new ArithmeticCaptcha(width, height, digit);
         // 获取运算的结果
         String result = captcha.text();
         String uuid = IdUtil.simpleUUID();
-        redisService.saveCode(uuid,result);
-        return new ImgResult(captcha.toBase64(),uuid);
+        redisService.saveCode(uuid, result);
+        return new ImgResult(captcha.toBase64(), uuid);
     }
 
     @PostMapping("/updatePassword")
     public ApiResponse updatePassword(@RequestParam("oldPass") String oldPass,
-                                      @RequestParam("pass") String pass){
+                                      @RequestParam("pass") String pass) {
         //获取用户
         Authentication authentication = SecurityUtils.getCurrentUserAuthentication();
-        String username = (String)authentication.getPrincipal();
+        String username = (String) authentication.getPrincipal();
         String usernameRedisKey = Constants.PASSWORD_UPDATE + username;
         // 校验用户是否被锁定
         if (redisUtils.exists(usernameRedisKey)) {
-            if (redisUtils.sGetSetSize(usernameRedisKey) >= 3L){
+            if (redisUtils.sGetSetSize(usernameRedisKey) >= 3L) {
                 return ApiResponse.fail("旧密码错误次数太多了，请稍后重试");
             }
         }
         // 判断旧密码是否正确
         SysUser sysUser = sysUserService.findByName(username);
-        if (sysUser != null){
-            if (!new BCryptPasswordEncoder().matches(oldPass,sysUser.getPassword())){
-                redisUtils.sSetAndTime(usernameRedisKey,Constants.PASSWORD_UPDATE_MINUTE, new Date());
-                return ApiResponse.fail("旧密码不匹配,还有"+ (3-redisUtils.sGetSetSize(usernameRedisKey)) +"次机会");
+        if (sysUser != null) {
+            if (!new BCryptPasswordEncoder().matches(oldPass, sysUser.getPassword())) {
+                redisUtils.sSetAndTime(usernameRedisKey, Constants.PASSWORD_UPDATE_MINUTE, new Date());
+                return ApiResponse.fail("旧密码不匹配,还有" + (3 - redisUtils.sGetSetSize(usernameRedisKey)) + "次机会");
             } else {
                 //更新密码
                 sysUserService.updatePasswordById(new BCryptPasswordEncoder().encode(pass), sysUser.getId());
                 if (redisUtils.exists(usernameRedisKey)) {
-                   redisUtils.remove(usernameRedisKey);
+                    redisUtils.remove(usernameRedisKey);
                 }
                 return ApiResponse.success("更新成功");
             }

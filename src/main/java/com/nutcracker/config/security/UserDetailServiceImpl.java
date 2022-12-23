@@ -1,11 +1,10 @@
 package com.nutcracker.config.security;
 
-import com.thyme.system.entity.SysRole;
-import com.thyme.system.entity.SysUser;
-import com.thyme.system.service.SysRoleService;
-import com.thyme.system.service.SysUserService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.nutcracker.entity.sys.SysRole;
+import com.nutcracker.entity.sys.SysUser;
+import com.nutcracker.service.sys.SysRoleService;
+import com.nutcracker.service.sys.SysUserService;
+import jakarta.annotation.Resource;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -18,18 +17,19 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * @author thyme
- * @ClassName UserDetailService
- * @Description TODO
- * @Date 2019/12/11 17:23
+ * UserDetailServiceImpl
+ *
+ * @author 胡桃夹子
+ * @date 2022/12/23 10:47
  */
 @Service
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserDetailServiceImpl implements UserDetailsService {
 
-    private final SysUserService sysUserService;
+    @Resource
+    private SysUserService sysUserService;
 
-    private final SysRoleService sysRoleService;
+    @Resource
+    private SysRoleService sysRoleService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -40,7 +40,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
             // 查询权限
             SysRole sysRole = sysRoleService.findByUserId(sysUser.getId());
             authorities.add(new SimpleGrantedAuthority(sysRole.getAuthority()));
-            return new User(username,sysUser.getPassword(),authorities);
+            return new User(username, sysUser.getPassword(), authorities);
         } else {
             throw new UsernameNotFoundException("用户名不存在");
         }

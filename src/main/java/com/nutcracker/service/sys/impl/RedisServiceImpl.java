@@ -2,8 +2,7 @@ package com.nutcracker.service.sys.impl;
 
 import com.nutcracker.service.sys.RedisService;
 import com.nutcracker.util.RedisUtils;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -17,11 +16,11 @@ import java.util.concurrent.TimeUnit;
  * @date 2022/12/22 13:37
  */
 @Service
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @SuppressWarnings({"unchecked", "all"})
 public class RedisServiceImpl implements RedisService {
 
-    private final RedisUtils redisUtils;
+    @Resource
+    private RedisUtils redisUtils;
 
     @Value("${loginCode.expiration}")
     private Long expiration;

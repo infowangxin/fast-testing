@@ -2,13 +2,13 @@ package com.nutcracker.config.xss;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.safety.Whitelist;
+import org.jsoup.safety.Safelist;
 
 /**
- * @author thyme
- * @ClassName XssFilterUtil
- * @Description TODO
- * @Date 2020/1/3 16:18
+ * XssFilterUtil
+ *
+ * @author 胡桃夹子
+ * @date 2022/12/23 10:47
  */
 public class XssFilterUtil {
     /**
@@ -17,10 +17,13 @@ public class XssFilterUtil {
      * strike,strong,sub,sup,u,ul,img
      * 以及a标签的href,img标签的src,align,alt,height,width,title属性
      */
-    private static final Whitelist WHITELIST = Whitelist.basicWithImages();
+    private static final Safelist WHITELIST = Safelist.basicWithImages();
 
-    /** 配置过滤化参数,不对代码进行格式化 */
+    /**
+     * 配置过滤化参数,不对代码进行格式化
+     */
     private static final Document.OutputSettings OUTPUTSETTINGS = new Document.OutputSettings().prettyPrint(false);
+
     static {
         // 富文本编辑时一些样式是使用style来进行实现的
         // 比如红色字体 style="color:red;"

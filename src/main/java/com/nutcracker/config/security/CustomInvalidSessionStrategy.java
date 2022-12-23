@@ -1,19 +1,19 @@
 package com.nutcracker.config.security;
 
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.web.session.InvalidSessionStrategy;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * @author thyme
- * @ClassName CustomInvalidSessionStrategy
- * @Description TODO
- * @Date 2019/12/18 20:37
+ * CustomInvalidSessionStrategy
+ *
+ * @author 胡桃夹子
+ * @date 2022/12/23 08:28
  */
 @Component
 public class CustomInvalidSessionStrategy implements InvalidSessionStrategy {
@@ -23,6 +23,6 @@ public class CustomInvalidSessionStrategy implements InvalidSessionStrategy {
 
     @Override
     public void onInvalidSessionDetected(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        request.getRequestDispatcher("/invalid_session").forward(request,response);
+        request.getRequestDispatcher("/invalid_session").forward(request, response);
     }
 }

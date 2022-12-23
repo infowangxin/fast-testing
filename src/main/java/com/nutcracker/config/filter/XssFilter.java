@@ -1,7 +1,8 @@
 package com.nutcracker.config.filter;
 
-import com.thyme.system.config.xss.XssHttpServletRequestWrapper;
+import com.nutcracker.config.xss.XssHttpServletRequestWrapper;
 import jakarta.servlet.FilterChain;
+import jakarta.servlet.Filter;
 import jakarta.servlet.FilterConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
@@ -19,10 +20,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * @author thyme
- * @ClassName XssFilter
- * @Description TODO
- * @Date 2020/1/3 16:10
+ * XssFilter
+ *
+ * @author 胡桃夹子
+ * @date 2022/12/23 08:25
  */
 @Slf4j
 public class XssFilter implements Filter {

@@ -4,6 +4,7 @@ import com.nutcracker.config.exception.ValidateCodeException;
 import com.nutcracker.config.security.handler.AuthenticationFailureHandler;
 import com.nutcracker.constant.Constants;
 import com.nutcracker.service.sys.RedisService;
+import jakarta.annotation.Resource;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,9 +29,11 @@ import java.io.IOException;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ValidateCodeFilter extends OncePerRequestFilter {
 
-    private final RedisService redisService;
+    @Resource
+    private RedisService redisService;
 
-    private final AuthenticationFailureHandler authenticationFailureHandler;
+    @Resource
+    private AuthenticationFailureHandler authenticationFailureHandler;
 
     private static final PathMatcher PATHMATCHER = new AntPathMatcher();
 

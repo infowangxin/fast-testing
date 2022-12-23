@@ -1,15 +1,14 @@
 package com.nutcracker.config.xss;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequestWrapper;
 import org.apache.commons.lang3.StringUtils;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
-
 /**
- * @author thyme
- * @ClassName XssHttpServletRequestWrapper
- * @Description TODO
- * @Date 2020/1/3 16:17
+ * XssHttpServletRequestWrapper
+ *
+ * @author 胡桃夹子
+ * @date 2022/12/23 08:15
  */
 public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 
@@ -17,9 +16,9 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 
     private boolean isIncludeRichText = false;
 
-    public XssHttpServletRequestWrapper(HttpServletRequest request,boolean isIncludeRichText) {
+    public XssHttpServletRequestWrapper(HttpServletRequest request, boolean isIncludeRichText) {
         super(request);
-        orgRequest =request;
+        orgRequest = request;
         this.isIncludeRichText = isIncludeRichText;
     }
 

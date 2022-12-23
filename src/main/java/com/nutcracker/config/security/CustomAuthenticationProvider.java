@@ -1,13 +1,11 @@
 package com.nutcracker.config.security;
 
-import com.thyme.system.entity.SysRole;
-import com.thyme.system.entity.SysUser;
-import com.thyme.system.service.SysRoleService;
-import com.thyme.system.service.SysUserService;
-import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.nutcracker.entity.sys.SysRole;
+import com.nutcracker.entity.sys.SysUser;
+import com.nutcracker.service.sys.SysRoleService;
+import com.nutcracker.service.sys.SysUserService;
+import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -22,20 +20,20 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * @author thyme
- * @ClassName CustomAuthenticationProvider
- * @Description TODO
- * @Date 2019/12/17 22:12
+ * CustomAuthenticationProvider
+ *
+ * @author 胡桃夹子
+ * @date 2022/12/23 08:27
  */
+@Slf4j
 @Component
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
-    private static final Logger log = LoggerFactory.getLogger(CustomAuthenticationProvider.class);
+    @Resource
+    private SysUserService sysUserService;
 
-    private final SysUserService sysUserService;
-
-    private final SysRoleService sysRoleService;
+    @Resource
+    private SysRoleService sysRoleService;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -48,7 +46,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         }
         //判断密码
         if (!new BCryptPasswordEncoder().matches(password, sysUser.getPassword())) {
-        //if (!StringUtils.equals(password, sysUser.getPassword())) {
+            //if (!StringUtils.equals(password, sysUser.getPassword())) {
             log.error("# 密码不正确 【{}】，【{}】", password, sysUser.getPassword());
             throw new UsernameNotFoundException("密码不正确");
         }

@@ -1,36 +1,35 @@
 package com.nutcracker.config.interceptor;
 
-import com.thyme.common.utils.SecurityUtils;
-import com.thyme.system.entity.SysMenu;
-import com.thyme.system.service.SysMenuService;
-import lombok.RequiredArgsConstructor;
+import com.nutcracker.entity.sys.SysMenu;
+import com.nutcracker.service.sys.SysMenuService;
+import com.nutcracker.util.SecurityUtils;
+import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * @author thyme
- * @ClassName LogHandlerInterceptor
- * @Description TODO
- * @Date 2020/1/9 16:45
+ * AccessAuthHandlerInterceptor
+ *
+ * @author 胡桃夹子
+ * @date 2022/12/23 08:25
  */
 @Slf4j
 @Component
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class AccessAuthHandlerInterceptor implements HandlerInterceptor {
 
     @Value("${server.servlet.context-path}")
     private String contextPath;
 
-    private final SysMenuService sysMenuService;
+    @Resource
+    private SysMenuService sysMenuService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
