@@ -1,6 +1,6 @@
 package com.nutcracker.config.security;
 
-import com.thyme.system.config.interceptor.AccessAuthHandlerInterceptor;
+import com.nutcracker.config.interceptor.AccessAuthHandlerInterceptor;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -8,10 +8,10 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
- * @author thyme
- * @ClassName SecurityMvcConfigurer
- * @Description TODO
- * @Date 2019/12/11 15:41
+ * SecurityMvcConfigurer
+ *
+ * @author 胡桃夹子
+ * @date 2022/12/23 11:17
  */
 @AllArgsConstructor
 @Configuration
