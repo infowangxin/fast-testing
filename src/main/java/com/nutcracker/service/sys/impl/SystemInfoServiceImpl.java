@@ -38,9 +38,8 @@ import java.util.Properties;
  * @author 胡桃夹子
  * @date 2022/12/22 13:40
  */
-@Service
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @Data
+@Service
 public class SystemInfoServiceImpl implements SystemInfoService {
 
     private static final int OSHI_WAIT_SECOND = 1000;

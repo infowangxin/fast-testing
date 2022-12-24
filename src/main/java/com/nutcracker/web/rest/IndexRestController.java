@@ -1,5 +1,8 @@
 package com.nutcracker.web.rest;
 
+import cn.hutool.captcha.CaptchaUtil;
+import cn.hutool.captcha.ShearCaptcha;
+import cn.hutool.core.util.IdUtil;
 import com.nutcracker.constant.Constants;
 import com.nutcracker.entity.ApiResponse;
 import com.nutcracker.entity.sys.SysUser;
@@ -7,9 +10,12 @@ import com.nutcracker.service.sys.RedisService;
 import com.nutcracker.service.sys.SysUserService;
 import com.nutcracker.util.RedisUtils;
 import com.nutcracker.util.SecurityUtils;
+import com.nutcracker.vo.ImgResult;
 import jakarta.annotation.Resource;
-import c.servlet.http.HttpServletRequest;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -18,6 +24,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.util.Date;
 
 /**
@@ -26,6 +33,7 @@ import java.util.Date;
  * @author 胡桃夹子
  * @date 2022/12/23 10:39
  */
+@Slf4j
 @RestController
 public class IndexRestController {
 
@@ -56,27 +64,19 @@ public class IndexRestController {
     @Value("${loginCode.digit}")
     private Integer digit;
 
-    @GetMapping("/captcha")
-    public void captcha(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        com.wf.captcha.utils.CaptchaUtil.out(request, response);
+    @GetMapping("/code")
+    public ImgResult captcha(HttpServletRequest request, HttpServletResponse response) {
+        //定义图形验证码的长、宽、验证码字符数、干扰线宽度
+        ShearCaptcha captcha = CaptchaUtil.createShearCaptcha(width, height, 4, 4);
+        String captchaCode = captcha.getCode();
+        log.debug("# 验证码:{}", captchaCode);
+        String uuid = request.getSession().getId();
+        redisService.saveCode(uuid, captchaCode);
+        return new ImgResult(captcha.getImageBase64Data(), uuid);
     }
-    /**
-     * 获取验证码
-     */
-    //@GetMapping("/code")
-    //public ImgResult getCode() {
-    //    // 算术类型 https://gitee.com/whvse/EasyCaptcha
-    //    ArithmeticCaptcha captcha = new ArithmeticCaptcha(width, height, digit);
-    //    // 获取运算的结果
-    //    String result = captcha.text();
-    //    String uuid = IdUtil.simpleUUID();
-    //    redisService.saveCode(uuid, result);
-    //    return new ImgResult(captcha.toBase64(), uuid);
-    //}
 
     @PostMapping("/updatePassword")
-    public ApiResponse updatePassword(@RequestParam("oldPass") String oldPass,
-                                      @RequestParam("pass") String pass) {
+    public ApiResponse updatePassword(@RequestParam("oldPass") String oldPass, @RequestParam("pass") String pass) {
         //获取用户
         Authentication authentication = SecurityUtils.getCurrentUserAuthentication();
         String username = (String) authentication.getPrincipal();
@@ -106,17 +106,4 @@ public class IndexRestController {
         }
     }
 
-
-
-
-    
-    /*@GetMapping("/getUserInfo")
-    public ApiResponse getUserInfo(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        authentication.getName()
-    }*/
-
-    public static void main(String[] args) {
-        System.out.println(new BCryptPasswordEncoder().encode("admin"));
-    }
 }

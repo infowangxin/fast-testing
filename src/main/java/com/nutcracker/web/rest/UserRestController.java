@@ -47,8 +47,7 @@ public class UserRestController {
     private SysUserRoleService sysUserRoleService;
 
     @GetMapping("/getUserInfo")
-    public ApiResponse getUserInfo(@RequestParam("page") int page,
-                                   @RequestParam("page_size") int pageSize) {
+    public ApiResponse getUserInfo(@RequestParam("page") int page, @RequestParam("page_size") int pageSize) {
         JSONObject jsonObject = new JSONObject();
         List<UserVO> userList = new ArrayList<>(16);
         IPage<SysUser> sysUserList = userService.getAll(new Page(page, pageSize));

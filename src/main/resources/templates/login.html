@@ -67,8 +67,8 @@
                 <el-input v-model='code' placeholder="验证码" style="width: 63%">
                 </el-input>
                 <div class="login-code">
-                    <!--<img :src='codeUrl' @click="getCode()">-->
-                    <img th:src='@{captcha}'>
+                    <img :src='codeUrl' @click="getCode()">
+                    <!--<img th:src='@{captcha}'>-->
                 </div>
             </el-form-item>
             <el-checkbox style="margin:0px 0px 25px 0px;">记住我</el-checkbox>
@@ -104,7 +104,6 @@
             uuidCode: ''
         },
         methods: {
-            /*
             getCode: function () {
                 $.ajax({
                     url: 'code',
@@ -115,7 +114,6 @@
                     }
                 })
             },
-             */
             login: function () {
                 var localObj = window.location;
                 var contextPath = localObj.pathname.split("/")[1];

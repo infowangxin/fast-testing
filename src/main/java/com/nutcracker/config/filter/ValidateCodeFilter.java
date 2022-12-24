@@ -26,7 +26,6 @@ import java.io.IOException;
  * @date 2022/12/22 15:36
  */
 @Component
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ValidateCodeFilter extends OncePerRequestFilter {
 
     @Resource
