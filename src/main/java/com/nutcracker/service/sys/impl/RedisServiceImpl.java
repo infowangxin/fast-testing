@@ -22,7 +22,7 @@ public class RedisServiceImpl implements RedisService {
     @Resource
     private RedisUtils redisUtils;
 
-    @Value("${loginCode.expiration}")
+    @Value("${captcha.expiration}")
     private Long expiration;
 
     @Override

@@ -10,6 +10,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -25,6 +26,7 @@ import java.io.IOException;
  * @author 胡桃夹子
  * @date 2022/12/22 15:36
  */
+@Slf4j
 @Component
 public class ValidateCodeFilter extends OncePerRequestFilter {
 
@@ -54,10 +56,12 @@ public class ValidateCodeFilter extends OncePerRequestFilter {
         //获取传入的验证码
         String code = request.getParameter("code");
         String uuidCode = request.getParameter("uuidCode");
+        log.debug("# code={},uuidCode={}", code, uuidCode);
         if (StringUtils.isEmpty(code)) {
             throw new ValidateCodeException("验证码的值不能为空");
         }
         String codeVal = redisService.getCodeVal(uuidCode);
+        log.debug("# codeVal={}", codeVal);
         if (StringUtils.isEmpty(codeVal)) {
             throw new ValidateCodeException("验证码已过期");
         }

@@ -7,13 +7,12 @@ var vm = new Vue({
     methods: {
         logout: function () {
             var localObj = window.location;
-            var contextPath = localObj.pathname.split("/")[1];
-            location.href = 'http://' + location.host + "/" + contextPath +"/logout";
+            location.href = 'http://' + location.host + "/" + _ctx + "/logout";
         }
     },
     mounted: function () {
         $.ajax({
-            url: 'menu/getMenulist',
+            url: _ctx + '/menu/getMenulist',
             type: 'GET',
             success: function (res) {
                 vm.loginName = res.data.name;

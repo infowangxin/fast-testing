@@ -49,19 +49,19 @@ public class IndexRestController {
     /**
      * 验证码 宽度
      */
-    @Value("${loginCode.width}")
+    @Value("${captcha.width}")
     private Integer width;
 
     /**
      * 验证码 高度
      */
-    @Value("${loginCode.height}")
+    @Value("${captcha.height}")
     private Integer height;
 
     /**
      * 验证码 运算位数
      */
-    @Value("${loginCode.digit}")
+    @Value("${captcha.digit}")
     private Integer digit;
 
     @GetMapping("/code")

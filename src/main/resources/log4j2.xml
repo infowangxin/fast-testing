@@ -7,8 +7,7 @@
         <Property name="LOG_DIR">${sys:LOG_PATH:-.}/logs</Property>
         <Property name="ROLLING_FILE_NAME">secret-client</Property>
         <Property name="NODE_NAME">${sys:clusternode:-}</Property>
-        <Property name="PATTERN_LAYOUT">${NODE_NAME} %d{yyyy/MM/dd HH:mm:ss,SSS} %-6r [%-6p] [%t] [%C{-10}.%M\(\) : %L]
-            %msg%n
+        <Property name="PATTERN_LAYOUT">${NODE_NAME} %d{yyyy/MM/dd HH:mm:ss,SSS} %-6r [%-6p] [%t] [%C{-10}.%M\(\) : %L] %msg%n
         </Property>
     </Properties>
 
@@ -47,7 +46,6 @@
 
     <Loggers>
         <AsyncLogger name="com.nutcracker" level="DEBUG"/>
-        <AsyncLogger name="com.nutcracker.vitrual.StartApplication" level="DEBUG"/>
 
         <!-- sql log -->
         <AsyncLogger name="org.springframework.jdbc.core.JdbcTemplate" level="DEBUG"/>

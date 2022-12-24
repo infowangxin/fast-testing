@@ -60,7 +60,7 @@
         <div class="layui-side layui-side-menu">
             <div class="layui-side-scroll">
                 <div class="layui-logo">
-                    <span>thyme-boot</span>
+                    <span>fast-testing</span>
                 </div>
                 <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu"
                     lay-filter="layadmin-system-side-menu">
@@ -125,14 +125,16 @@
         <div class="layadmin-body-shade" layadmin-event="shade"></div>
     </div>
 </div>
+<script th:inline="javascript">
+    var _ctx = [[${application.ctx}]];
+</script>
 <script th:src="@{static/js/jquery.1.12.4.min.js}"></script>
 <script th:src="@{static/js/vue.2.6.11.js}"></script>
 <script th:src="@{static/js/layui/layui.js}"></script>
 <script th:src="@{static/js/layui/lay/modules/laytpl.js}"></script>
 <script th:src="@{static/js/lib/index.js}"></script>
 <script th:src="@{static/js/modules/index.js}"></script>
-<script type="text/javascript">
-
+<script th:inline="javascript">
     // 动态切换主题（页面未开发）
     function addCss(filename){
         var creatHead = $('head');

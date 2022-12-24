@@ -85,7 +85,8 @@
         </div>
     </div>
 </div>
-<script type="text/javascript">
+<script th:inline="javascript">
+    var _ctx = [[${application.ctx}]];
     if (window != top)
         top.location.href = location.href;
 </script>
@@ -93,7 +94,7 @@
 <script th:src="@{static/js/jquery.1.12.4.min.js}"></script>
 <script th:src="@{static/js/vue.2.6.11.js}"></script>
 <script th:src="@{static/js/element-ui.2.13.0.js}"></script>
-<script type="text/javascript">
+<script th:inline="javascript">
     var vm = new Vue({
         el: '#app',
         data: {
@@ -116,7 +117,8 @@
             },
             login: function () {
                 var localObj = window.location;
-                var contextPath = localObj.pathname.split("/")[1];
+                //var contextPath = localObj.pathname.split("/")[1];
+                var contextPath = _ctx;
                 var password = CryptoJS.SHA256(vm.password).toString();
                 console.log(password);
                 $.ajax({
@@ -130,7 +132,8 @@
                     },
                     success: function (res) {
                         if (res.code === 200) {
-                            location.href = 'http://' + location.host + "/" + contextPath;
+                            location.href = 'http://' + location.host + "/" + _ctx;
+                            //location.href = _ctx;
                         } else {
                             vm.$message.error(res.message);
                             vm.getCode();
