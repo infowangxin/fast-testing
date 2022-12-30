@@ -75,7 +75,7 @@ public class IpInfoUtils {
      */
     public static String getipSource(String ip) throws Exception {
         DbConfig config = new DbConfig();
-        String path = "config/ip2region.db";
+        String path = "db/ip2region.db";
         String name = "ip2region.db";
         File file = FileUtils.inputStreamToFile(new ClassPathResource(path).getStream(), name);
         DbSearcher searcher = new DbSearcher(config, file.getPath());

@@ -1,6 +1,6 @@
 package com.nutcracker.web.rest;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 import com.nutcracker.entity.ApiResponse;
 import com.nutcracker.entity.sys.systeminfo.CpuInfo;
 import com.nutcracker.entity.sys.systeminfo.HeapInfo;

@@ -18,7 +18,7 @@ singleServerConfig:
   # 单个连接最大订阅数量
   subscriptionsPerConnection: 5
   # 客户端名称
-  clientName: 'aplus-profile'
+  clientName: 'fast-testing'
   # 发布和订阅连接的最小空闲连接数
   subscriptionConnectionMinimumIdleSize: 1
   # 发布和订阅连接池大小

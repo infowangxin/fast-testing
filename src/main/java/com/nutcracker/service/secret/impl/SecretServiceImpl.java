@@ -1,6 +1,6 @@
 package com.nutcracker.service.secret.impl;
 
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson2.JSON;
 import com.nutcracker.enums.SecretStrategyEnum;
 import com.nutcracker.service.secret.SecretService;
 import com.nutcracker.strategy.StrategyFactory;

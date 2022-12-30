@@ -1,6 +1,6 @@
 package com.nutcracker.web.controller.secret;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 import com.nutcracker.enums.SecretStrategyEnum;
 import com.nutcracker.enums.SecretTypeEnum;
 import com.nutcracker.exception.BusinessException;

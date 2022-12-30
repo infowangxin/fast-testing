@@ -1,6 +1,6 @@
 package com.nutcracker.web.controller;
 
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson2.JSON;
 import com.nutcracker.entity.sys.SysUser;
 import com.nutcracker.service.sys.SysRoleService;
 import com.nutcracker.service.sys.SysUserService;
