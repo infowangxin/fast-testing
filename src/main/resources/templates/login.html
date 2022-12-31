@@ -86,7 +86,7 @@
     </div>
 </div>
 <script th:inline="javascript">
-    var _ctx = [[${application.ctx}]];
+    var context = [[${application.ctx}]];
     if (window != top)
         top.location.href = location.href;
 </script>
@@ -118,7 +118,6 @@
             login: function () {
                 var localObj = window.location;
                 //var contextPath = localObj.pathname.split("/")[1];
-                var contextPath = _ctx;
                 var password = CryptoJS.SHA256(vm.password).toString();
                 console.log(password);
                 $.ajax({
@@ -132,8 +131,7 @@
                     },
                     success: function (res) {
                         if (res.code === 200) {
-                            location.href = 'http://' + location.host + "/" + _ctx;
-                            //location.href = _ctx;
+                            location.href = 'http://' + location.host + "/" + context;
                         } else {
                             vm.$message.error(res.message);
                             vm.getCode();

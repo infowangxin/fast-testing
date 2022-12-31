@@ -22,7 +22,7 @@ var app = new Vue({
             $.ajax({
                 cache : true,
                 type : "GET",
-                url : context + 'role/getRoleMenu',
+                url : context + '/role/getRoleMenu',
                 data:{
                     "roleId":id
                 },
@@ -83,7 +83,7 @@ function updateRole(){
     $.ajax({
         cache : true,
         type : "POST",
-        url : context + 'role/updateRole',
+        url : context + '/role/updateRole',
         data :JSON.stringify(roleVO),
         dataType : 'json',
         contentType:'application/json',

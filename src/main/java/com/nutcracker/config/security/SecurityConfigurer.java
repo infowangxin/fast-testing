@@ -6,6 +6,7 @@ import com.nutcracker.config.security.handler.AuthenticationSuccessHandler;
 import com.nutcracker.config.security.handler.CustomLogoutSuccessHandler;
 import com.nutcracker.constant.Constants;
 import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -28,6 +29,7 @@ import java.util.Arrays;
  * @author 胡桃夹子
  * @date 2022/12/23 11:04
  */
+@Slf4j
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -96,6 +98,8 @@ public class SecurityConfigurer {
                         .and()
                         .csrf().disable()
                         .cors()
+                        // headers().frameOptions().disable()，解决 in a frame because it set 'X-Frame-Options' to 'deny'报错。
+                        .and().headers().frameOptions().disable()
                         .and()
                         .logout()
                         .logoutUrl(Constants.LOGOUT_URL)
@@ -117,6 +121,7 @@ public class SecurityConfigurer {
                         .expiredSessionStrategy(customExpiredSessionStrategy)
                         .sessionRegistry(sessionRegistry);
             } catch (Exception e) {
+                log.error("# {}", e.getLocalizedMessage());
                 throw new RuntimeException(e);
             }
         });

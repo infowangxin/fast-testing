@@ -14,7 +14,7 @@ var vm = new Vue({
                 maxmin: true,
                 shadeClose: false, // 点击遮罩关闭层
                 area: ['800px', '520px'],
-                content: context + 'role/add',
+                content: context + '/role/add',
                 end: function () {
                     vm.getRoleList();
                 }
@@ -28,7 +28,7 @@ var vm = new Vue({
                 maxmin: true,
                 shadeClose: false, // 点击遮罩关闭层
                 area: ['800px', '520px'],
-                content: context + 'role/update?name='+row.name+"&authority="+row.authority+"&id="+row.id, // iframe的url
+                content: context + '/role/update?name='+row.name+"&authority="+row.authority+"&id="+row.id, // iframe的url
                 end: function () {
                     vm.getRoleList();
                 }
@@ -37,7 +37,7 @@ var vm = new Vue({
         handleDelete:function(row,tableData) {
             layer.confirm("您确定要删除吗？", function (index) {
                 $.ajax({
-                    url: context + 'role/deleteRole?id=' + row.id,
+                    url: context + '/role/deleteRole?id=' + row.id,
                     type: 'GET',
                     success: function (res) {
                         if (res.code === 200){
@@ -63,7 +63,7 @@ var vm = new Vue({
 
         getRoleList: function () {
             $.ajax({
-                url: context + 'role/getRoleInfo?page=' + this.current_page + '&page_size=' + this.page_size,
+                url: context + '/role/getRoleInfo?page=' + this.current_page + '&page_size=' + this.page_size,
                 type: 'GET',
                 success: function (res) {
                     vm.tableData = res.data.sysRoleList;

@@ -14,7 +14,7 @@ var vm = new Vue({
                 maxmin: true,
                 shadeClose: false, // 点击遮罩关闭层
                 area: ['800px', '520px'],
-                content: context + 'menu/add',
+                content: context + '/menu/add',
                 end: function () {
                     vm.getMenuList();
                 }
@@ -27,7 +27,7 @@ var vm = new Vue({
                 maxmin: true,
                 shadeClose: false, // 点击遮罩关闭层
                 area: ['800px', '520px'],
-                content: context + 'menu/update?id='+row.id,
+                content: context + '/menu/update?id='+row.id,
                 end: function () {
                     vm.getMenuList();
                 }
@@ -36,7 +36,7 @@ var vm = new Vue({
         handleDelete:function(row) {
             layer.confirm("您确定要删除吗？", function (index) {
                 $.ajax({
-                    url: context + 'menu/deleteMenu?id=' + row.id,
+                    url: context + '/menu/deleteMenu?id=' + row.id,
                     type: 'GET',
                     success: function (res) {
                         if (res.code === 200){
@@ -66,7 +66,7 @@ var vm = new Vue({
 
         getMenuList: function () {
             $.ajax({
-                url: context + 'menu/getMenuInfo?page=' + this.current_page + '&page_size=' + this.page_size,
+                url: context + '/menu/getMenuInfo?page=' + this.current_page + '&page_size=' + this.page_size,
                 type: 'GET',
                 success: function (res) {
                     console.log(res);

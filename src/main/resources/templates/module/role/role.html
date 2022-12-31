@@ -70,8 +70,7 @@
     </div>
 </div>
 <script th:inline="javascript">
-    var context = [[@{
-        /}]];
+    var context = [[${application.ctx}]];
 </script>
 <script th:src="@{/static/js/jquery.1.12.4.min.js}"></script>
 <script th:src="@{/static/js/jquery.validate.min.js}"></script>

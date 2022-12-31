@@ -10,6 +10,7 @@ import com.nutcracker.util.UUIDUtils;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -27,8 +28,9 @@ public class SysLogServiceImpl implements SysLogService {
     @Resource
     private SysLogMapper sysLogDao;
 
+    @Async
     @Override
-    public int saveLoginLog(HttpServletRequest request, String message, String name) {
+    public void saveLoginLog(HttpServletRequest request, String message, String name) {
         try {
             // 获取ip地址
             String ipAddr = IpInfoUtils.getIpAddr(request);
@@ -48,16 +50,15 @@ public class SysLogServiceImpl implements SysLogService {
                     .message(message)
                     .systemName(systemName)
                     .build();
-            return sysLogDao.insert(sysLog);
+            int ret = sysLogDao.insert(sysLog);
+            log.debug("# sysLogDao.insert ret={}", ret);
         } catch (Exception e) {
             log.error("获取ip来源出错");
-            e.printStackTrace();
         }
-        return 0;
     }
 
     @Override
-    public IPage<SysLog> findSysLogPage(Page page) {
+    public IPage<SysLog> findSysLogPage(Page<SysLog> page) {
         return sysLogDao.findSysLogPage(page);
     }
 }

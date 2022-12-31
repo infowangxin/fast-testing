@@ -91,6 +91,7 @@
 </div>
 <script th:inline="javascript">
     var context = [[${application.ctx}]];
+    console.log('context='+context);
 </script>
 <script th:src="@{/static/js/jquery.1.12.4.min.js}"></script>
 <script th:src="@{/static/js/jquery.validate.min.js}"></script>

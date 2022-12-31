@@ -20,7 +20,7 @@ var vm = new Vue({
         },
         geSysLoglist: function () {
             $.ajax({
-                url: context + 'sysLog/geSysLoglist?page=' + this.current_page + '&page_size=' + this.page_size,
+                url: context + '/sysLog/geSysLoglist?page=' + this.current_page + '&page_size=' + this.page_size,
                 type: 'GET',
                 success: function (res) {
                     console.log(res);

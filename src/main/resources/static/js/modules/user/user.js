@@ -15,7 +15,7 @@ $().ready(function(){
                     maxmin: true,
                     shadeClose: false, // 点击遮罩关闭层
                     area: ['800px', '700px'],
-                    content: context + 'user/add',
+                    content: context + '/user/add',
                     end: function () {
                         vm.getUserList();
                     }
@@ -28,7 +28,7 @@ $().ready(function(){
                     maxmin: true,
                     shadeClose: false, // 点击遮罩关闭层
                     area: ['800px', '700px'],
-                    content: context + 'user/update?id='+row.id,
+                    content: context + '/user/update?id='+row.id,
                     end: function () {
                         vm.getUserList();
                     }
@@ -39,7 +39,7 @@ $().ready(function(){
                     btn: ['确认','取消'] //按钮
                 }, function(){
                     $.ajax({
-                        url: context + 'user/editPassword?id='+row.id,
+                        url: context + '/user/editPassword?id='+row.id,
                         type: 'GET',
                         success: function (res) {
                             if (res.code === 200){
@@ -59,7 +59,7 @@ $().ready(function(){
             handleDelete:function(row) {
                 layer.confirm("您确定要删除吗？", function (index) {
                     $.ajax({
-                        url: context + 'user/deleteUser?id=' + row.id,
+                        url: context + '/user/deleteUser?id=' + row.id,
                         type: 'GET',
                         success: function (res) {
                             if (res.code === 200){
@@ -85,7 +85,7 @@ $().ready(function(){
 
             getUserList: function () {
                 $.ajax({
-                    url: context + 'user/getUserInfo?page=' + this.current_page + '&page_size=' + this.page_size,
+                    url: context + '/user/getUserInfo?page=' + this.current_page + '&page_size=' + this.page_size,
                     type: 'GET',
                     success: function (res) {
                         vm.tableData = res.data.sysUserList;

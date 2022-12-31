@@ -14,7 +14,7 @@ var app = new Vue({
             $.ajax({
                 cache : true,
                 type : "GET",
-                url : context + 'user/getAllRoleName',
+                url : context + '/user/getAllRoleName',
                 error : function(request) {
                     parent.layer.alert("Connection error");
                 },
@@ -82,7 +82,7 @@ function addUser(){
         $.ajax({
             cache : true,
             type : "POST",
-            url : context + 'user/addUser',
+            url : context + '/user/addUser',
             data :JSON.stringify(sysUser),
             dataType : 'json',
             contentType:'application/json',

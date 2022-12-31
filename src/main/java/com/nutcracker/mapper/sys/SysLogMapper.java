@@ -16,6 +16,6 @@ import org.apache.ibatis.annotations.Mapper;
 public interface SysLogMapper extends BaseMapper<SysLog> {
 
     //@Select("SELECT * FROM sys_log ORDER BY create_date desc")
-    IPage<SysLog> findSysLogPage(Page page);
+    IPage<SysLog> findSysLogPage(Page<SysLog> page);
 
 }

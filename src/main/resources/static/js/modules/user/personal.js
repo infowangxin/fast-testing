@@ -25,7 +25,7 @@ var app =  new Vue({
                 if (valid) {
                     if (isMobileEmail(app.ruleForm.mobile,app.ruleForm.email)){
                         $.ajax({
-                            url: context + 'user/editUser',
+                            url: context + '/user/editUser',
                             type: 'POST',
                             data: JSON.stringify(app.ruleForm),
                             dataType : 'json',

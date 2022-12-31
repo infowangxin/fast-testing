@@ -19,7 +19,7 @@ var app = new Vue({
             $.ajax({
                 cache : true,
                 type : "GET",
-                url : context + 'role/getData',
+                url : context + '/role/getData',
                 error : function(request) {
                     parent.layer.alert("Connection error");
                 },
@@ -72,7 +72,7 @@ function addRole(){
     $.ajax({
         cache : true,
         type : "POST",
-        url : context + 'role/addRole',
+        url : context + '/role/addRole',
         data :JSON.stringify(roleVO),
         dataType : 'json',
         contentType:'application/json',

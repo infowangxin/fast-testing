@@ -12,7 +12,7 @@ var app = new Vue({
             $.ajax({
                 cache : true,
                 type : "GET",
-                url : context + 'menu/getMenuLevel',
+                url : context + '/menu/getMenuLevel',
                 error : function(request) {
                     parent.layer.alert("Connection error");
                 },
@@ -40,7 +40,7 @@ var app = new Vue({
                     $.ajax({
                         cache: true,
                         type: "GET",
-                        url: context + 'menu/getPreviousMenu?menuLevel=' + menuLevel,
+                        url: context + '/menu/getPreviousMenu?menuLevel=' + menuLevel,
                         error: function (request) {
                             parent.layer.alert("Connection error");
                         },
@@ -132,7 +132,7 @@ function addMenu(){
     $.ajax({
         cache : true,
         type : "POST",
-        url : context + 'menu/addMenu',
+        url : context + '/menu/addMenu',
         data :JSON.stringify(menuVO),
         dataType : 'json',
         contentType:'application/json',

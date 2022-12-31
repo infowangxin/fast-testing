@@ -14,8 +14,21 @@ import jakarta.servlet.http.HttpServletRequest;
  */
 public interface SysLogService {
 
-    int saveLoginLog(HttpServletRequest request, String message, String name);
+    /**
+     * 保存登录日志
+     *
+     * @param request HttpServletRequest
+     * @param message 描述
+     * @param name    登录账号
+     */
+    void saveLoginLog(HttpServletRequest request, String message, String name);
 
-    IPage<SysLog> findSysLogPage(Page page);
+    /**
+     * 分页查询登录日志
+     *
+     * @param page 分页对象
+     * @return 登录日志
+     */
+    IPage<SysLog> findSysLogPage(Page<SysLog> page);
 
 }
