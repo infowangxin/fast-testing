@@ -47,10 +47,9 @@ public class RoleRestController {
     private SysMenuRoleService sysMenuRoleService;
 
     @GetMapping("/getRoleInfo")
-    public ApiResponse getRoleInfo(@RequestParam("page") int page,
-                                   @RequestParam("page_size") int pageSize) {
+    public ApiResponse<JSONObject> getRoleInfo(@RequestParam("page") int page, @RequestParam("page_size") int pageSize) {
         JSONObject jsonObject = new JSONObject();
-        IPage<SysRole> sysRoleList = sysRoleService.getAll(new Page(page, pageSize));
+        IPage<SysRole> sysRoleList = sysRoleService.getAll(new Page<>(page, pageSize));
         jsonObject.put("total", sysRoleList.getTotal());
         jsonObject.put("page", sysRoleList.getCurrent());
         jsonObject.put("page_size", sysRoleList.getSize());
@@ -60,7 +59,7 @@ public class RoleRestController {
 
     @GetMapping("/deleteRole")
     @Transactional(rollbackFor = {RuntimeException.class, Exception.class})
-    public ApiResponse deleteRole(@RequestParam("id") String id) {
+    public ApiResponse<JSONObject> deleteRole(@RequestParam("id") String id) {
         JSONObject jsonObject = new JSONObject();
         try {
             sysMenuRoleService.deleteByRoleId(id);
@@ -76,7 +75,7 @@ public class RoleRestController {
     @PostMapping("/updateRole")
     @ResponseBody
     @Transactional(rollbackFor = {RuntimeException.class, Exception.class})
-    public ApiResponse updateRole(@RequestBody RoleVO roleVO) {
+    public ApiResponse<JSONObject> updateRole(@RequestBody RoleVO roleVO) {
         JSONObject jsonObject = new JSONObject();
         try {
             sysMenuRoleService.deleteByRoleId(roleVO.getId());
@@ -100,7 +99,7 @@ public class RoleRestController {
     @PostMapping("/addRole")
     @ResponseBody
     @Transactional(rollbackFor = {RuntimeException.class, Exception.class})
-    public ApiResponse addRole(@RequestBody RoleVO roleVO) {
+    public ApiResponse<JSONObject> addRole(@RequestBody RoleVO roleVO) {
         JSONObject jsonObject = new JSONObject();
         try {
             SysRole role = sysRoleService.getByName(roleVO.getName());
@@ -125,7 +124,7 @@ public class RoleRestController {
     }
 
     @GetMapping("/getData")
-    public ApiResponse getData() {
+    public ApiResponse<JSONObject> getData() {
         JSONObject jsonObject = new JSONObject();
         List<MenuListVo> listVoList = getMenu();
         jsonObject.put("menuList", listVoList);
@@ -133,7 +132,7 @@ public class RoleRestController {
     }
 
     @GetMapping("/getRoleMenu")
-    public ApiResponse getRoleMenu(@RequestParam("roleId") String roleId) {
+    public ApiResponse<JSONObject> getRoleMenu(@RequestParam("roleId") String roleId) {
         JSONObject jsonObject = new JSONObject();
         List<MenuListVo> listVoList = getMenu();
         List<String> parentIds = sysMenuService.getRoleMenu(roleId);

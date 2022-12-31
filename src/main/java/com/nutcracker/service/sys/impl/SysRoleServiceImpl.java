@@ -28,7 +28,7 @@ public class SysRoleServiceImpl implements SysRoleService {
     }
 
     @Override
-    public IPage<SysRole> getAll(Page page) {
+    public IPage<SysRole> getAll(Page<SysRole> page) {
         return sysRoleDao.getAll(page);
     }
 

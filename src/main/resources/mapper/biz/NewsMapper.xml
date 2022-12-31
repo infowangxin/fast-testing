@@ -35,7 +35,7 @@
         ]]>
 	</sql>
 
-    <select id="findById" parameterType="string" resultMap="newsMap">
+    <select id="selectById" parameterType="string" resultMap="newsMap">
         <include refid="find_xxx"/>
         <include refid="from_xxx"/>
         <![CDATA[
@@ -46,12 +46,12 @@
     <select id="findNewsByKeywords" parameterType="string" resultMap="newsMap">
         <include refid="find_xxx"/>
         <include refid="from_xxx"/>
-        <!--<where>-->
-        <!--    <if test="keywords != null and keywords != ''">-->
-        <!--        <bind name="pattern" value="'%' + _parameter.keywords + '%'"/>-->
-        <!--        title like #{pattern}-->
-        <!--    </if>-->
-        <!--</where>-->
+        <where>
+            <if test="keywords != null and keywords != ''">
+                <bind name="pattern" value="'%' + _parameter.keywords + '%'"/>
+                title like #{pattern}
+            </if>
+        </where>
     </select>
 
     <select id="findNewsByPage" parameterType="string" resultMap="newsMap">

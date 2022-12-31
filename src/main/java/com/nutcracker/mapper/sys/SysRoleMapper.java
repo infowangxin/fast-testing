@@ -33,7 +33,7 @@ public interface SysRoleMapper extends BaseMapper<SysRole> {
      * @return 所有角色集合
      */
     //@Select("SELECT * FROM sys_role")
-    IPage<SysRole> getAll(Page page);
+    IPage<SysRole> getAll(Page<SysRole> page);
 
     /**
      * 根据名称查角色

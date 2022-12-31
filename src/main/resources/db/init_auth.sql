@@ -37,6 +37,8 @@ INSERT INTO sys_menu VALUES ('ba90c64234a44202818e10868ab9da91', '8f1eb86b093546
 INSERT INTO sys_menu VALUES ('be0a8e5ec52c4f0baa2a3edf8194f7f2', 'e3c575455f1a4af683b26b3f56a27815', '服务器监控', 'server', 'system/serverInfo', NULL, '2', '0', '1', '2019-12-27 17:08:56', 'admin');
 INSERT INTO sys_menu VALUES ('e3c575455f1a4af683b26b3f56a27815', NULL, '系统监控', 'monitor', NULL, 'layui-icon-engine', '1', '1', '1', '2019-12-24 15:37:04', 'admin');
 INSERT INTO sys_menu VALUES ('ed8df2ffe77645cdb7a1b2b10f5d89e4', '3e7d54f2bd82464484defcb4709b3142', '角色管理', 'role', 'role/list', NULL, '2', '1', '1', '2019-12-24 15:08:17', 'admin');
+INSERT INTO sys_menu VALUES ('6dd18b967ee14d03b82a094b86473345', NULL, '中台管理', 'management', NULL, 'layui-icon-service', '1', '1', '1', '2019-12-24 15:08:17', 'admin');
+INSERT INTO sys_menu VALUES ('17cc729340ac47088e35c5fdb8156bb1', '6dd18b967ee14d03b82a094b86473345', '新闻列表', 'news', 'news/news', NULL, '1', '1', '1', '2019-12-24 15:08:17', 'admin');
 
 CREATE TABLE sys_menu_role  (
     menu_id varchar(32) NOT NULL ,
@@ -70,6 +72,12 @@ INSERT INTO sys_menu_role VALUES ('5c2f6c5c80084a99a9d7166ba328bfdd', 'b8174920f
 INSERT INTO sys_menu_role VALUES ('8f1eb86b09354635b3857222d54991d3', 'b8174920f33f4b17ad5f415c700aacd2');
 INSERT INTO sys_menu_role VALUES ('ba90c64234a44202818e10868ab9da91', 'b8174920f33f4b17ad5f415c700aacd2');
 INSERT INTO sys_menu_role VALUES ('893c49dd5fdb44d79bb2897db9472517', 'b8174920f33f4b17ad5f415c700aacd2');
+INSERT INTO sys_menu_role VALUES ('6dd18b967ee14d03b82a094b86473345', '811d784a392ad816');
+INSERT INTO sys_menu_role VALUES ('17cc729340ac47088e35c5fdb8156bb1', '811d784a392ad816');
+INSERT INTO sys_menu_role VALUES ('6dd18b967ee14d03b82a094b86473345', '38ab52848a074a3b8845b09eadb3fd71');
+INSERT INTO sys_menu_role VALUES ('17cc729340ac47088e35c5fdb8156bb1', '38ab52848a074a3b8845b09eadb3fd71');
+INSERT INTO sys_menu_role VALUES ('6dd18b967ee14d03b82a094b86473345', 'b8174920f33f4b17ad5f415c700aacd2');
+INSERT INTO sys_menu_role VALUES ('17cc729340ac47088e35c5fdb8156bb1', 'b8174920f33f4b17ad5f415c700aacd2');
 
 CREATE TABLE sys_role  (
     id varchar(32) NOT NULL ,

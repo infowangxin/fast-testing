@@ -41,7 +41,7 @@ public class MenuRestController {
     private SysMenuService sysMenuService;
 
     @GetMapping("/getMenulist")
-    public ApiResponse getMenulist() {
+    public ApiResponse<JSONObject> getMenulist() {
         //获取当前用户登录用户
         Authentication userAuthentication = SecurityUtils.getCurrentUserAuthentication();
         String name = userAuthentication.getName();
@@ -53,13 +53,12 @@ public class MenuRestController {
     }
 
     @GetMapping("/getMenuInfo")
-    public ApiResponse getMenuInfo(@RequestParam("page") int page,
-                                   @RequestParam("page_size") int pageSize) {
+    public ApiResponse<JSONObject> getMenuInfo(@RequestParam("page") int page, @RequestParam("page_size") int pageSize) {
         JSONObject jsonObject = new JSONObject();
 
         /*page = (page -1) * pageSize;*/
         List<MenuListVo> listVoList = new LinkedList<>();
-        IPage<SysMenu> firstMenu = sysMenuService.findFirstMenu(new Page(page, pageSize));
+        IPage<SysMenu> firstMenu = sysMenuService.findFirstMenu(new Page<>(page, pageSize));
         //组装数据
         List<SysMenu> firstMenuList = firstMenu.getRecords();
         for (SysMenu sysMenu : firstMenuList) {
@@ -97,7 +96,7 @@ public class MenuRestController {
 
     @PostMapping("/updateMenu")
     @ResponseBody
-    public ApiResponse updateMenu(@RequestBody SysMenuNameVO sysMenuNameVO) {
+    public ApiResponse<JSONObject> updateMenu(@RequestBody SysMenuNameVO sysMenuNameVO) {
         JSONObject jsonObject = new JSONObject();
         SysMenuVO sysMenu = new SysMenuVO(sysMenuNameVO.getId(), sysMenuService.getByMenuName(sysMenuNameVO.getMenuNames()), sysMenuNameVO.getMenuName(), sysMenuNameVO.getMenuCode(), sysMenuNameVO.getMenuHref(), sysMenuNameVO.getMenuIcon(),
                 sysMenuNameVO.getMenuLevel(), sysMenuNameVO.getMenuWeight(), sysMenuNameVO.getIsShow(), null, null);
@@ -114,7 +113,7 @@ public class MenuRestController {
 
     @PostMapping("/addMenu")
     @ResponseBody
-    public ApiResponse addMenu(@RequestBody SysMenuNameVO sysMenuNameVO) {
+    public ApiResponse<JSONObject> addMenu(@RequestBody SysMenuNameVO sysMenuNameVO) {
         JSONObject jsonObject = new JSONObject();
         SysMenu menu = sysMenuService.getByName(sysMenuNameVO.getMenuName(), sysMenuNameVO.getMenuCode(), sysMenuNameVO.getMenuHref());
         if (menu == null) {
@@ -136,7 +135,7 @@ public class MenuRestController {
     }
 
     @GetMapping("/getMenuLevel")
-    public ApiResponse getMenuLevel() {
+    public ApiResponse<JSONObject> getMenuLevel() {
         JSONObject jsonObject = new JSONObject();
         List<String> menuLevel = sysMenuService.getMenuLevel();
         jsonObject.put("menuLevel", menuLevel);
@@ -144,7 +143,7 @@ public class MenuRestController {
     }
 
     @GetMapping("/getPreviousMenu")
-    public ApiResponse getPreviousMenu(@RequestParam("menuLevel") String menuLevel) {
+    public ApiResponse<JSONObject> getPreviousMenu(@RequestParam("menuLevel") String menuLevel) {
         JSONObject jsonObject = new JSONObject();
         List<MenuNameVO> menuNames = sysMenuService.getPreviousMenu(String.valueOf((Integer.parseInt(menuLevel) - 1)));
         jsonObject.put("menuNames", menuNames);

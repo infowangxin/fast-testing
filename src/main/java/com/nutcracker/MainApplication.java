@@ -16,6 +16,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @Slf4j
 @EnableAsync
 @EnableCaching
+//@EnableRedissonHttpSession
 @ServletComponentScan(basePackages = "com.nutcracker")
 @SpringBootApplication(scanBasePackages = "com.nutcracker")
 public class MainApplication {

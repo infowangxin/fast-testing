@@ -28,7 +28,7 @@ server:
       # common - %h %l %u %t "%r" %s %b，依次为：远程主机名称，远程用户名，被认证的远程用户，日期和时间，请求的第一行，response code，发送的字节数
       # combined - %h %l %u %t "%r" %s %b "%{Referer}i" "%{User-Agent}i"，依次为：远程主机名称，远程用户名，被认证的远程用户，日期和时间，请求的第一行，response code，发送的字节数，request header的Referer信息，request header的User-Agent信息。
       pattern: combined # 设置日志的格式，指定pattern为模板名称
-      prefix: access_log # 日志文件的文件名后缀
+      prefix: access # 日志文件的文件名后缀
       rename-on-rotate: false # 是否延迟在文件名中包含日期戳，直到旋转时间。
       request-attributes-enabled: false # 设置请求的IP地址，主机名，协议和端口的请求属性。
       rotate: true # 是否启用访问日志轮换。
@@ -68,15 +68,6 @@ spring:
     prefix: classpath:/templates/
     # 模板文件后缀
     suffix: .html
-  devtools:
-    restart:
-      #热部署开启
-      enabled: false
-      # 设置需要重启的目录
-      additional-paths: src/main/*
-      # 默认情况下，/META-INF/maven，/META-INF/resources，/resources，/static，/templates，/public这些文件夹下的文件修改不会使应用重启，但是会重新加载（devtools内嵌了一个LiveReload server，当资源发生改变时，浏览器刷新）
-      # 只有这两个目录下的文件修改不会导致restart
-      exclude: static/**,templates/**
   redis:
     redisson:
       # redisson cluster yml 方式集成redis
@@ -133,8 +124,10 @@ spring:
             leak-detection-threshold: 60000
             #连接测试查询
             connection-test-query: SELECT 'biz'
-  session:
-    store-type: redis
+#  session:
+#    store-type: redis
+#    redis:
+#      namespace: spring::session
 
 mybatis-plus:
   mapper-locations: classpath:mapper/**/*.xml

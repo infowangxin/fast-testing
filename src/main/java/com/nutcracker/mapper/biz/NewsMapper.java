@@ -1,6 +1,7 @@
 package com.nutcracker.mapper.biz;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.nutcracker.entity.biz.News;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -23,5 +24,14 @@ public interface NewsMapper extends BaseMapper<News> {
      * @return 新闻数据
      */
     List<News> findNewsByKeywords(@Param("keywords") String keywords);
+
+    /**
+     * 根据关键字分页查询新闻
+     *
+     * @param page     分页查询对象
+     * @param keywords 关键字
+     * @return 新闻数据
+     */
+    IPage<News> findNewsByPage(IPage<News> page, @Param("keywords") String keywords);
 
 }

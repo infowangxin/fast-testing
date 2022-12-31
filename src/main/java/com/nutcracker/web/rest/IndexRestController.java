@@ -2,7 +2,6 @@ package com.nutcracker.web.rest;
 
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.ShearCaptcha;
-import cn.hutool.core.util.IdUtil;
 import com.nutcracker.constant.Constants;
 import com.nutcracker.entity.ApiResponse;
 import com.nutcracker.entity.sys.SysUser;
@@ -12,7 +11,6 @@ import com.nutcracker.util.RedisUtils;
 import com.nutcracker.util.SecurityUtils;
 import com.nutcracker.vo.ImgResult;
 import jakarta.annotation.Resource;
-import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +22,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
 import java.util.Date;
 
 /**
@@ -76,7 +73,7 @@ public class IndexRestController {
     }
 
     @PostMapping("/updatePassword")
-    public ApiResponse updatePassword(@RequestParam("oldPass") String oldPass, @RequestParam("pass") String pass) {
+    public ApiResponse<String> updatePassword(@RequestParam("oldPass") String oldPass, @RequestParam("pass") String pass) {
         //获取用户
         Authentication authentication = SecurityUtils.getCurrentUserAuthentication();
         String username = (String) authentication.getPrincipal();

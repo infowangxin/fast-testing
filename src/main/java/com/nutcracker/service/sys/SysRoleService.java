@@ -23,7 +23,7 @@ public interface SysRoleService {
      * @param page 分页数据
      * @return 所有角色集合
      */
-    IPage<SysRole> getAll(Page page);
+    IPage<SysRole> getAll(Page<SysRole> page);
 
     /**
      * 根据名称查角色

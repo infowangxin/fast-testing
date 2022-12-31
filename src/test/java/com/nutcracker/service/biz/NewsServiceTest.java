@@ -1,6 +1,7 @@
 package com.nutcracker.service.biz;
 
 import com.alibaba.fastjson2.JSON;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.nutcracker.entity.biz.News;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +31,17 @@ public class NewsServiceTest {
             for (News news : list) {
                 log.info("# {}", JSON.toJSONString(news));
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void getAll() {
+        try {
+            String keywords = null;
+            IPage<News> resp = newsService.getAll(1, 5, keywords);
+            log.info("# resp:{}", JSON.toJSONString(resp));
         } catch (Exception e) {
             e.printStackTrace();
         }

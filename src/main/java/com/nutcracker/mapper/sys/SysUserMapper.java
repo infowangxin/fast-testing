@@ -32,7 +32,7 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
      * @return 所有用户集合
      */
     //@Select("SELECT * FROM sys_user")
-    IPage<SysUser> getAll(Page page);
+    IPage<SysUser> getAll(Page<SysUser> page);
 
     /**
      * 根据id查用户
@@ -51,7 +51,6 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
      * @return 返回值
      */
     //@Update("update sys_user set password = #{password} where id = #{id}")
-    int updatePasswordById(@Param("password") String password,
-                           @Param("id") String id);
+    int updatePasswordById(@Param("password") String password, @Param("id") String id);
 
 }

@@ -30,24 +30,24 @@ public class ApiResponse<T extends Serializable> implements Serializable {
         this.message = Status.SUCCESS.getStandardMessage();
     }
 
-    public static ApiResponse ofMessage(int code, String message) {
-        return new ApiResponse(code, message, null);
+    public static <T extends Serializable> ApiResponse<T> ofMessage(int code, String message) {
+        return new ApiResponse<>(code, message, null);
     }
 
-    public static <T extends Serializable> ApiResponse ofSuccess(T data) {
-        return new ApiResponse(Status.SUCCESS.getCode(), Status.SUCCESS.getStandardMessage(), data);
+    public static <T extends Serializable> ApiResponse<T> ofSuccess(T data) {
+        return new ApiResponse<>(Status.SUCCESS.getCode(), Status.SUCCESS.getStandardMessage(), data);
     }
 
-    public static ApiResponse success(String message) {
-        return new ApiResponse(Status.SUCCESS.getCode(), message, null);
+    public static <T extends Serializable> ApiResponse<T> success(String message) {
+        return new ApiResponse<>(Status.SUCCESS.getCode(), message, null);
     }
 
-    public static ApiResponse fail(String message) {
-        return new ApiResponse(Status.INTERNAL_SERVER_ERROR.getCode(), message, null);
+    public static <T extends Serializable> ApiResponse<T> fail(String message) {
+        return new ApiResponse<>(Status.INTERNAL_SERVER_ERROR.getCode(), message, null);
     }
 
-    public static ApiResponse ofStatus(Status status) {
-        return new ApiResponse(status.getCode(), status.getStandardMessage(), null);
+    public static <T extends Serializable> ApiResponse<T> ofStatus(Status status) {
+        return new ApiResponse<>(status.getCode(), status.getStandardMessage(), null);
     }
 
     public enum Status {

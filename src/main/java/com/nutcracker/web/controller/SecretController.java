@@ -1,15 +1,14 @@
-package com.nutcracker.web.controller.secret;
+package com.nutcracker.web.controller;
 
-import com.alibaba.fastjson2.JSONObject;
 import com.nutcracker.enums.SecretStrategyEnum;
 import com.nutcracker.enums.SecretTypeEnum;
 import com.nutcracker.exception.BusinessException;
 import com.nutcracker.service.secret.SecretService;
 import com.nutcracker.util.DateUtil;
+import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,9 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedReader;
@@ -34,13 +31,19 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+/**
+ * SecretController
+ *
+ * @author 胡桃夹子
+ * @date 2022/12/31 13:30
+ */
 //@Tag(name = "secret", description = "加密与解密相关接口")
 @Slf4j
 @Controller
 @RequestMapping("secret")
 public class SecretController {
 
-    @Autowired
+    @Resource
     private SecretService secretService;
 
     private static final String FLAG = "endFlag";
@@ -124,48 +127,5 @@ public class SecretController {
         }
     }
 
-    //@Operation(description = "加密解密操作")
-    //@ApiResponses(value = {@ApiResponse(description = "返回结果")})
-    //@Parameters({
-    //        @Parameter(name = "textString", description = "待解密或加密操文本"),
-    //        @Parameter(name = "secretType", description = "加密或解密的类型枚举：encrypt=加密,decrypt=解密", example = "encrypt"),
-    //        @Parameter(name = "secretStrategy", description = "加解密渠道枚举: RSA=RSA加解密;DES=DES加解密;DESede=DESede加解密;", example = "RSA"),
-    //})
-    @PostMapping("execute/{secretType}/{secretStrategy}")
-    @ResponseBody
-    public String execute(@RequestParam("textString") String textString, @PathVariable String secretType, @PathVariable String secretStrategy) {
-        log.info("# textString={},secretType={},secretStrategy={}", textString, secretType, secretStrategy);
-        String result = "";
-        try {
-            if (StringUtils.isNotBlank(textString)) {
-                SecretTypeEnum typeEnum = SecretTypeEnum.getInstance(secretType);
-                SecretStrategyEnum strategyEnum = SecretStrategyEnum.getInstance(secretStrategy);
-                if (typeEnum == SecretTypeEnum.encrypt) {
-                    result = secretService.encrypt(strategyEnum, textString);
-                } else {
-                    result = secretService.decrypt(strategyEnum, textString);
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        log.info("{},{}", textString, result);
-        return result;
-    }
-
-    /**
-     * 从session获取结束标识
-     */
-    //@Hidden
-    @ResponseBody
-    @RequestMapping("getEndFlag")
-    public JSONObject getEndFlag(HttpServletRequest request) {
-        //  跟踪下载情况，获取下载标记位
-        Object endFlag = request.getSession().getAttribute(FLAG);
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("flag", endFlag);
-        log.debug("# 下载情况:{}", endFlag);
-        return jsonObject;
-    }
 
 }

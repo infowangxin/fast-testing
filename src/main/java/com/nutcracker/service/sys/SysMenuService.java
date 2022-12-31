@@ -21,7 +21,7 @@ public interface SysMenuService {
 
     List<SysMenu> findMenuListByUser(String username);
 
-    IPage<SysMenu> findFirstMenu(Page page);
+    IPage<SysMenu> findFirstMenu(Page<SysMenu> page);
 
     List<SysMenu> findByParentId(String parentId);
 

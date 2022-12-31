@@ -35,7 +35,7 @@ public class SystemInfoRestController {
      * 获取硬件信息
      */
     @GetMapping("/getServerStaticInfo")
-    public ApiResponse getInfo() {
+    public ApiResponse<JSONObject> getInfo() {
         SystemInfo si = new SystemInfo();
         // 获取磁盘信息
         List<SysFileInfo> sysFileInfo = systemInfoService.getSysFileInfo(si.getOperatingSystem());
@@ -51,7 +51,7 @@ public class SystemInfoRestController {
      * 动态获取硬件信息
      */
     @GetMapping("/getServerDynamicInfo")
-    public ApiResponse getDynamicInfo() {
+    public ApiResponse<JSONObject> getDynamicInfo() {
         JSONObject jsonObject = new JSONObject(16);
         SystemInfo si = new SystemInfo();
         HardwareAbstractionLayer hal = si.getHardware();

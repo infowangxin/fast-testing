@@ -47,10 +47,10 @@ public class UserRestController {
     private SysUserRoleService sysUserRoleService;
 
     @GetMapping("/getUserInfo")
-    public ApiResponse getUserInfo(@RequestParam("page") int page, @RequestParam("page_size") int pageSize) {
+    public ApiResponse<JSONObject> getUserInfo(@RequestParam("page") int page, @RequestParam("page_size") int pageSize) {
         JSONObject jsonObject = new JSONObject();
         List<UserVO> userList = new ArrayList<>(16);
-        IPage<SysUser> sysUserList = userService.getAll(new Page(page, pageSize));
+        IPage<SysUser> sysUserList = userService.getAll(new Page<>(page, pageSize));
         if (sysUserList.getRecords() != null && sysUserList.getRecords().size() > 0) {
             for (SysUser sysUser : sysUserList.getRecords()) {
                 //根据用户id查询角色名称
@@ -74,7 +74,7 @@ public class UserRestController {
 
     @GetMapping("/deleteUser")
     @Transactional(rollbackFor = {RuntimeException.class, Exception.class})
-    public ApiResponse deleteUser(@RequestParam("id") String id) {
+    public ApiResponse<JSONObject> deleteUser(@RequestParam("id") String id) {
         JSONObject jsonObject = new JSONObject();
         try {
             sysUserRoleService.deleteByUserId(id);
@@ -89,7 +89,7 @@ public class UserRestController {
     @PostMapping("/updateUser")
     @ResponseBody
     @Transactional(rollbackFor = {RuntimeException.class, Exception.class})
-    public ApiResponse updateRole(@RequestBody UserVO userVO) {
+    public ApiResponse<JSONObject> updateRole(@RequestBody UserVO userVO) {
         JSONObject jsonObject = new JSONObject();
         SysUser sysUser = new SysUser(userVO.getId(), userVO.getName(), null, userVO.getNickName(), userVO.getSex(), userVO.getMobile(),
                 userVO.getEmail(), userVO.getBirthday(), userVO.getHobby(), userVO.getLiveAddress(), null, new Date());
@@ -107,7 +107,7 @@ public class UserRestController {
     @PostMapping("/addUser")
     @ResponseBody
     @Transactional(rollbackFor = {RuntimeException.class, Exception.class})
-    public ApiResponse addRole(@RequestBody UserVO userVO) {
+    public ApiResponse<JSONObject> addRole(@RequestBody UserVO userVO) {
         JSONObject jsonObject = new JSONObject();
         SysUser user = userService.findByName(userVO.getName());
         if (user == null) {
@@ -133,7 +133,7 @@ public class UserRestController {
     }
 
     @GetMapping("/editPassword")
-    public ApiResponse editPassword(String id) {
+    public ApiResponse<JSONObject> editPassword(String id) {
         JSONObject jsonObject = new JSONObject();
         SysUser sysUser = new SysUser();
         sysUser.setId(id);
@@ -149,7 +149,7 @@ public class UserRestController {
     }
 
     @GetMapping("/getAllRoleName")
-    public ApiResponse getAllRoleName() {
+    public ApiResponse<JSONObject> getAllRoleName() {
         JSONObject jsonObject = new JSONObject();
         List<String> allRoleName = sysRoleService.getAllRoleName();
         jsonObject.put("allRoleName", allRoleName);
@@ -158,7 +158,7 @@ public class UserRestController {
 
     @PostMapping("/editUser")
     @ResponseBody
-    public ApiResponse editUser(@RequestBody UserVO userVO) {
+    public ApiResponse<JSONObject> editUser(@RequestBody UserVO userVO) {
         JSONObject jsonObject = new JSONObject();
         SysUser sysUser = new SysUser();
         sysUser.setId(userVO.getId());

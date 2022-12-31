@@ -27,7 +27,7 @@ public interface SysUserService {
      * @param page 分页数据
      * @return 所有用户集合
      */
-    IPage<SysUser> getAll(Page page);
+    IPage<SysUser> getAll(Page<SysUser> page);
 
     /**
      * 根据id查用户

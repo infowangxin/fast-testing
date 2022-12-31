@@ -71,7 +71,7 @@ public class SysMenuServiceImpl implements SysMenuService {
     }
 
     @Override
-    public IPage<SysMenu> findFirstMenu(Page page) {
+    public IPage<SysMenu> findFirstMenu(Page<SysMenu> page) {
         return sysMenuDao.findFirstMenu(page);
     }
 

@@ -26,9 +26,8 @@ public class SysLogRestController {
     private SysLogService sysLogService;
 
     @GetMapping("/geSysLoglist")
-    public ApiResponse getMenulist(@RequestParam("page") int page,
-                                   @RequestParam("page_size") int pageSize) {
-        IPage<SysLog> sysLogPage = sysLogService.findSysLogPage(new Page(page, pageSize));
+    public ApiResponse<JSONObject> getMenulist(@RequestParam("page") int page, @RequestParam("page_size") int pageSize) {
+        IPage<SysLog> sysLogPage = sysLogService.findSysLogPage(new Page<>(page, pageSize));
         JSONObject data = new JSONObject(16);
         data.put("total", sysLogPage.getTotal());
         data.put("sysLogList", sysLogPage.getRecords());

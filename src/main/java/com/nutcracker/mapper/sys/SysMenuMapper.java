@@ -25,7 +25,7 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
 
 
     //@Select("SELECT * FROM sys_menu WHERE menu_level = 1 ORDER BY menu_weight")
-    IPage<SysMenu> findFirstMenu(Page page);
+    IPage<SysMenu> findFirstMenu(Page<SysMenu> page);
 
     //@Select("SELECT * FROM sys_menu WHERE parent_id = #{parentId} ORDER BY menu_weight")
     List<SysMenu> findByParentId(@Param("parentId") String parentId);

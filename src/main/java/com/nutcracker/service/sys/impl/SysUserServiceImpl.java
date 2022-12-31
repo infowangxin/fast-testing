@@ -26,7 +26,7 @@ public class SysUserServiceImpl implements SysUserService {
     }
 
     @Override
-    public IPage<SysUser> getAll(Page page) {
+    public IPage<SysUser> getAll(Page<SysUser> page) {
         return sysUserDao.getAll(page);
     }
 
