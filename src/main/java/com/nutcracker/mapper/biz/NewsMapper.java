@@ -34,4 +34,12 @@ public interface NewsMapper extends BaseMapper<News> {
      */
     IPage<News> findNewsByPage(IPage<News> page, @Param("keywords") String keywords);
 
+    /**
+     * 更新新闻
+     *
+     * @param news 新闻对象，id为必传值
+     * @return true=更新成功;false=更新失败;
+     */
+    int updateNews(News news);
+
 }

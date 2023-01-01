@@ -15,6 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -64,7 +65,7 @@ public class XssFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        log.info("初始化XssFilter过滤器....");
+        log.debug("初始化XssFilter过滤器....");
         String isIncludeRichText = filterConfig.getInitParameter("isIncludeRichText");
         if (StringUtils.isNotBlank(isIncludeRichText)) {
             IS_INCLUDE_RICH_TEXT = BooleanUtils.toBoolean(isIncludeRichText);
@@ -72,9 +73,7 @@ public class XssFilter implements Filter {
         String temp = filterConfig.getInitParameter("excludes");
         if (temp != null) {
             String[] url = temp.split(",");
-            for (int i = 0; url != null && i < url.length; i++) {
-                excludes.add(url[i]);
-            }
+            excludes.addAll(Arrays.asList(url));
         }
     }
 }

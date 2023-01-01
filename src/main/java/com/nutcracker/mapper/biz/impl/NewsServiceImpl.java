@@ -1,5 +1,6 @@
 package com.nutcracker.mapper.biz.impl;
 
+import com.alibaba.fastjson2.JSON;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -11,6 +12,7 @@ import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
@@ -26,6 +28,13 @@ public class NewsServiceImpl implements NewsService {
 
     @Resource
     private NewsMapper newsMapper;
+
+    @DS(DataSourceTagger.BIZ)
+    @Override
+    public News findNewsById(String id) {
+        log.debug("id={}", id);
+        return newsMapper.selectById(id);
+    }
 
     //@DS(DataSourceTagger.AUTH)
     @DS(DataSourceTagger.BIZ)
@@ -47,5 +56,27 @@ public class NewsServiceImpl implements NewsService {
         }
         log.debug("# page={},pageSize={}", page, pageSize);
         return newsMapper.findNewsByPage(new Page<>(page, pageSize), keywords);
+    }
+
+    @DS(DataSourceTagger.BIZ)
+    @Override
+    public boolean deleteNews(String id) {
+        log.info("id={}", id);
+        return 1 == newsMapper.deleteById(id);
+    }
+
+    @DS(DataSourceTagger.BIZ)
+    @Override
+    public boolean updateNews(News news) {
+        log.info("{}", JSON.toJSONString(news));
+        return 1 == newsMapper.updateNews(news);
+    }
+
+    @DS(DataSourceTagger.BIZ)
+    @Override
+    public boolean addNews(News news) {
+        news.setCreateTime(Calendar.getInstance().getTime());
+        log.debug("{}", JSON.toJSONString(news));
+        return 1 == newsMapper.insert(news);
     }
 }

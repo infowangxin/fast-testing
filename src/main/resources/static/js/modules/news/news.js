@@ -12,20 +12,20 @@ $().ready(function () {
             formatDate(row, column) {
                 // 获取单元格数据
                 let data = row[column.property]
-                if(data == null) {
+                if (data == null) {
                     return null
                 }
                 let dt = new Date(data)
                 return dt.getFullYear() + '-' + (dt.getMonth() + 1) + '-' + dt.getDate() + ' ' + dt.getHours() + ':' + dt.getMinutes() + ':' + dt.getSeconds()
             },
-            addUser: function () {
+            addNews: function () {
                 layer.open({
                     type: 2,
                     title: '新增',
                     maxmin: true,
                     shadeClose: false, // 点击遮罩关闭层
                     area: ['800px', '700px'],
-                    content: context + '/user/add',
+                    content: context + '/news/addNews',
                     end: function () {
                         vm.getNewsList();
                     }
@@ -38,45 +38,23 @@ $().ready(function () {
                     maxmin: true,
                     shadeClose: false, // 点击遮罩关闭层
                     area: ['800px', '700px'],
-                    content: context + '/user/update?id=' + row.id,
+                    content: context + '/news/updateNews/' + row.id,
                     end: function () {
                         vm.getNewsList();
                     }
                 });
             },
-            editPassword: function (row) {
-                layer.confirm('该用户密码将重置为123456，是否确认？', {
-                    btn: ['确认', '取消'] //按钮
-                }, function () {
-                    $.ajax({
-                        url: context + '/user/editPassword?id=' + row.id,
-                        type: 'GET',
-                        success: function (res) {
-                            if (res.code === 200) {
-                                if (res.data.code === 200) {
-                                    layer.msg("重置密码操作成功");
-                                    vm.getNewsList();
-                                } else if (res.data.code === 500) {
-                                    layer.msg("重置密码操作失败");
-                                }
-                            }
-                        }
-                    });
-                }, function () {
-
-                });
-            },
             handleDelete: function (row) {
                 layer.confirm("您确定要删除吗？", function (index) {
                     $.ajax({
-                        url: context + '/user/deleteUser?id=' + row.id,
+                        url: context + '/news/deleteNews/' + row.id,
                         type: 'GET',
                         success: function (res) {
                             if (res.code === 200) {
-                                if (res.data.code === 200) {
+                                if (res.data.status === true) {
                                     layer.msg("操作成功");
                                     vm.getNewsList();
-                                } else if (res.data.code === 500) {
+                                } else {
                                     layer.msg("操作失败");
                                 }
                             }

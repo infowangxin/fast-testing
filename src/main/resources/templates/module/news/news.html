@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>news list</title>
     <link th:href="@{/static/css/layui/layui.css}" rel="stylesheet">
     <link th:href="@{/static/css/style.css}" rel="stylesheet">
     <link th:href="@{/static/css/bootstrap.min.css}" rel="stylesheet">
@@ -16,7 +16,7 @@
     <div class="layui-row layui-col-space15">
         <div class="layui-col-sm12 layui-col-md12 layui-col-lg12">
             <div class="layui-card">
-                <span style="margin-left: 92%" @click="addUser()" class="btn btn-primary">新增</span>
+                <span style="margin-left: 92%" @click="addNews()" class="btn btn-primary">新增</span>
                 <div class="layui-card-body">
                     <el-table
                             :data="tableData"
@@ -61,10 +61,6 @@
                                         size="mini"
                                         type="danger"
                                         @click="handleDelete(scope.row)">删除
-                                </el-button>
-                                <el-button
-                                        size="mini"
-                                        @click="editPassword(scope.row)">重置密码
                                 </el-button>
                             </template>
                         </el-table-column>

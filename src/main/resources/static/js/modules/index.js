@@ -6,7 +6,6 @@ var vm = new Vue({
     },
     methods: {
         logout: function () {
-            var localObj = window.location;
             location.href = 'http://' + location.host + "/" + context + "/logout";
         }
     },
