@@ -105,6 +105,7 @@
 
         <!--
         官方文档：https://baomidou.com
+        快照仓库地址：https://oss.sonatype.org/content/repositories/snapshots
         -->
         <dependency>
             <groupId>com.baomidou</groupId>
@@ -191,7 +192,7 @@
         <dependency>
             <groupId>org.redisson</groupId>
             <artifactId>redisson-spring-boot-starter</artifactId>
-            <version>3.19.0</version>
+            <version>3.19.1</version>
         </dependency>
 
         <!--
