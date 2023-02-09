@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.0.1</version>
+        <version>3.0.2</version>
         <relativePath/>
     </parent>
 
@@ -228,6 +228,13 @@
             <groupId>nl.bitwalker</groupId>
             <artifactId>UserAgentUtils</artifactId>
             <version>1.2.4</version>
+        </dependency>
+
+        <!-- nacos -->
+        <dependency>
+            <groupId>com.alibaba.boot</groupId>
+            <artifactId>nacos-config-spring-boot-starter</artifactId>
+            <version>0.2.12</version>
         </dependency>
 
         <!-- lombok -->

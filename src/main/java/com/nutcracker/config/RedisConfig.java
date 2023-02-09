@@ -1,5 +1,6 @@
 package com.nutcracker.config;
 
+import com.alibaba.nacos.api.config.annotation.NacosValue;
 import com.nutcracker.constant.CacheableKey;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -7,7 +8,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurer;
 import org.springframework.cache.interceptor.CacheErrorHandler;
@@ -47,7 +47,7 @@ public class RedisConfig implements CachingConfigurer {
     private RedisConnectionFactory redisConnectionFactory;
 
     @Bean(destroyMethod = "shutdown")
-    public RedissonClient redissonClient(@Value("${spring.redis.redisson.config}") String path) throws IOException {
+    public RedissonClient redissonClient(@NacosValue(value = "${spring.redis.redisson.config}", autoRefreshed = true) String path) throws IOException {
         log.info("# redissonConfig={}", path);
         String config = StringUtils.replace(path, "classpath:", "");
         log.info("# config={}", config);
