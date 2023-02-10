@@ -1,6 +1,5 @@
 package com.nutcracker.util;
 
-import com.google.common.collect.Lists;
 import org.apache.poi.hssf.usermodel.HSSFDataValidation;
 import org.apache.poi.hssf.usermodel.HSSFDataValidationHelper;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -8,14 +7,13 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.DataValidation;
 import org.apache.poi.ss.usermodel.DataValidationConstraint;
-import org.apache.poi.ss.usermodel.DataValidationConstraint.OperatorType;
-import org.apache.poi.ss.usermodel.DataValidationConstraint.ValidationType;
 import org.apache.poi.ss.usermodel.Name;
 import org.apache.poi.ss.util.CellRangeAddressList;
 import org.apache.poi.util.IOUtils;
 
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -23,64 +21,57 @@ import java.util.Map;
 
 public class ExcelExport {
 
+
     public static void main(String[] args) {
         export();
     }
 
     public static void export() {
-// 1.准备数据
-        // 1)单个下拉数据
-        List<String> genderList = new ArrayList<String>();
-        genderList.add("male");
-        genderList.add("female");
+        // 1.准备数据
         // 2)多级联动下拉数据
-        List<String> provinceList = new ArrayList<String>();
-        provinceList.add("广东省");
-        provinceList.add("湖北省");
-        Map<String, List<String>> siteMap = new HashMap<String, List<String>>();
-        siteMap.put("广东省", Lists.newArrayList("广州市", "佛山市"));
-        siteMap.put("湖北省", Lists.newArrayList("武汉市", "荆州市"));
-        siteMap.put("广州市", Lists.newArrayList("白云区", "越秀区"));
-        siteMap.put("佛山市", Lists.newArrayList("顺德区", "南海区"));
-// 2.创建Excel
+        List<String> provinceList = new ArrayList<>();
+        provinceList.add("云塘街道");
+        provinceList.add("雨湖路街道");
+        provinceList.add("昭潭街道");
+        provinceList.add("广场街道");
+        provinceList.add("城正街街道");
+        provinceList.add("窑湾街道");
+
+        // 整理数据，放入一个Map中，mapkey存放父地点，value 存放该地点下的子区域
+        Map<String, List<String>> siteMap = new HashMap<>();
+        siteMap.put("云塘街道", Arrays.asList("云塘街道本级", "杉树巷社区居委会", "公园社区居委会", "火车站社区居委会", "繁城社区居委会"));
+        siteMap.put("雨湖路街道", Arrays.asList("雨湖街道本级", "关圣殿社区居委会", "古梁巷社区居委会", "风车坪社区居委会", "车站路社区居委会", "和平桥社区居委会"));
+        siteMap.put("昭潭街道", Arrays.asList("昭潭街道本级", "许家铺社区居委会", "白石社区居委会", "广园社区居委会", "烟竹社区居委会", "砂子岭社区居委会", "宝庆路社区居委会", "宝丰街社区居委会", "富民城社区居委会"));
+        siteMap.put("广场街道", Arrays.asList("广场街道本级", "建设社区居委会", "中心社区居委会", "福利社区居委会", "韶山路社区居委会", "南盘岭社区居委会", "和平社区居委会"));
+
+        // 2.创建Excel
         // 1)创建workbook
         HSSFWorkbook hssfWorkBook = new HSSFWorkbook();
         // 2)创建sheet
         HSSFSheet mainSheet = hssfWorkBook.createSheet("mainSheet");// 主sheet
+        mainSheet.setDefaultColumnWidth(20);
         // 用于展示
         //2.1 创建表头，供用户输入
         HSSFRow headRow = mainSheet.createRow(0);// 创建第一行
-        headRow.createCell(0).setCellValue("gender");
-        headRow.createCell(1).setCellValue("province");
-        headRow.createCell(2).setCellValue("city");
-        headRow.createCell(3).setCellValue("area");
-        headRow.createCell(4).setCellValue("date");
-        headRow.createCell(5).setCellValue("num1");
-        headRow.createCell(6).setCellValue("num2");
+        headRow.createCell(0).setCellValue("乡镇/街道");
+        headRow.createCell(1).setCellValue("村/社区");
+        headRow.createCell(2).setCellValue("姓名");
+        headRow.createCell(3).setCellValue("身份证号码");
+        headRow.createCell(4).setCellValue("居住地址");
+        headRow.createCell(5).setCellValue("所属部门");
 
-        HSSFSheet genderSheet = hssfWorkBook.createSheet("genderSheet");// 隐藏sheet
-        // 用于隐藏性别数据
         HSSFSheet siteSheet = hssfWorkBook.createSheet("siteSheet");// 隐藏sheet
-        // 用于隐藏地点数据
-        hssfWorkBook.setSheetHidden(hssfWorkBook.getSheetIndex(genderSheet), false);// 设置sheet是否隐藏
-        // true:隐藏/false:显示
-        hssfWorkBook.setSheetHidden(hssfWorkBook.getSheetIndex(siteSheet), false);// 设置sheet是否隐藏
-        // true:隐藏/false:显示
-// 3.写入数据
-        writeData(hssfWorkBook, genderSheet, siteSheet, genderList, provinceList, siteMap);// 将数据写入隐藏的sheet中并做好关联关系
-// 4.设置数据有效性
-        setDataValid(hssfWorkBook, mainSheet, genderList, provinceList, siteMap);
-        // 5.设置时间规则
-        setDateFormat(hssfWorkBook, mainSheet);
-        // 6.设置数据规则
-        List<Integer> cellNumList = new ArrayList<Integer>();
-        cellNumList.add(5);
-        cellNumList.add(6);
-        setNumberFormat(hssfWorkBook, mainSheet, cellNumList);
+        hssfWorkBook.setSheetHidden(hssfWorkBook.getSheetIndex(siteSheet), true);// // true:隐藏/false:显示
+
+        // 3.写入数据
+        writeData(hssfWorkBook, siteSheet, provinceList, siteMap);// 将数据写入隐藏的sheet中并做好关联关系
+        // 4.设置数据有效性
+        setDataValid(hssfWorkBook, mainSheet, provinceList, siteMap);
+
         FileOutputStream os = null;
         try {
-            //os = new FileOutputStream("D:/excelExport.xls");
             os = new FileOutputStream("/Users/vincent/Downloads/excelExport.xls");
+            //os = new FileOutputStream("D:/excelExport.xls");
             hssfWorkBook.write(os);
         } catch (Exception e) {
             e.printStackTrace();
@@ -90,64 +81,44 @@ public class ExcelExport {
     }
 
     //
-    public static void setDataValid(HSSFWorkbook HSSFWorkBook, HSSFSheet mainSheet, List<String> genderList, List<String> provinceList, Map<String, List<String>> siteMap) {
+    public static void setDataValid(HSSFWorkbook HSSFWorkBook, HSSFSheet mainSheet, List<String> provinceList, Map<String, List<String>> siteMap) {
         //设置省份下拉
         HSSFDataValidationHelper dvHelper = new HSSFDataValidationHelper((HSSFSheet) mainSheet);
         DataValidationConstraint provinceConstraint = dvHelper.createExplicitListConstraint(provinceList.toArray(new String[]{}));
-        CellRangeAddressList provinceRangeAddressList = new CellRangeAddressList(1, 60, 1, 1);//意思是从B2：B61 为下拉
+        CellRangeAddressList provinceRangeAddressList = new CellRangeAddressList(1, 60, 0, 0);//意思是从B1：B61 为下拉
         DataValidation provinceDataValidation = dvHelper.createValidation(provinceConstraint, provinceRangeAddressList);
-        provinceDataValidation.createErrorBox("error", "请选择正确的省份");
+        provinceDataValidation.createErrorBox("error", "请选择正确的乡镇/街道");
         provinceDataValidation.setShowErrorBox(true);
-        // provinceDataValidation.setSuppressDropDownArrow(true);
         mainSheet.addValidationData(provinceDataValidation);
-
-        //设置性别下拉
-        DataValidationConstraint genderConstraint = dvHelper.createFormulaListConstraint("gender");
-        CellRangeAddressList genderRangeAddressList = new CellRangeAddressList(1, 60, 0, 0);//意思是从A2：A61 为下拉
-        HSSFDataValidation genderDataValidation = (HSSFDataValidation) dvHelper.createValidation(genderConstraint, genderRangeAddressList);
-        genderDataValidation.createErrorBox("Error", "请选择或输入有效的选项，或下载最新模版重试！");
-        // genderDataValidation.setSuppressDropDownArrow(true);
-        mainSheet.addValidationData(genderDataValidation);
 
         // 设置市、区下拉
         for (int i = 0; i <= 60; i++) {
-            setDataValidation('B', mainSheet, i + 1, 2);// "B"是指省所在的列，i+1初始值为1代表从第2行开始，2要与“B”对应，为B的列号加1，假如第一个参数为“C”，那么最后一个参数就3
+            setDataValidation('A', mainSheet, i + 1, 1); // "B"是指省所在的列，i+1初始值为1代表从第2行开始，2要与“B”对应，为B的列号加1，假如第一个参数为“C”，那么最后一个参数就3
         }
     }
 
     public static void setDataValidation(char offset, HSSFSheet sheet, int rowNum, int colNum) {
         HSSFDataValidationHelper dvHelper = new HSSFDataValidationHelper(sheet);
         DataValidation dataValidationList1;
-        DataValidation dataValidationList2;
         dataValidationList1 = getDataValidationByFormula("INDIRECT($" + offset + (rowNum) + ")", rowNum, colNum, dvHelper);
-        dataValidationList2 = getDataValidationByFormula("INDIRECT($" + (char) (offset + 1) + (rowNum) + ")", rowNum, colNum + 1, dvHelper);
         sheet.addValidationData(dataValidationList1);
-        sheet.addValidationData(dataValidationList2);
     }
 
     private static DataValidation getDataValidationByFormula(String formulaString, int naturalRowIndex, int naturalColumnIndex, HSSFDataValidationHelper dvHelper) {
         DataValidationConstraint dvConstraint = dvHelper.createFormulaListConstraint(formulaString);
-        CellRangeAddressList regions = new CellRangeAddressList(naturalRowIndex, 65535, naturalColumnIndex, naturalColumnIndex);
+        CellRangeAddressList regions = new CellRangeAddressList(naturalRowIndex, 10000, naturalColumnIndex, naturalColumnIndex);
         HSSFDataValidation data_validation_list = (HSSFDataValidation) dvHelper.createValidation(dvConstraint, regions);
         data_validation_list.setEmptyCellAllowed(false);
         if (data_validation_list instanceof HSSFDataValidation) {
-            // data_validation_list.setSuppressDropDownArrow(true);
             data_validation_list.setShowErrorBox(true);
         } else {
-            // data_validation_list.setSuppressDropDownArrow(false);
         }
         // 设置输入信息提示信息
         data_validation_list.createPromptBox("下拉选择提示", "请使用下拉方式选择合适的值！");
         return data_validation_list;
     }
 
-    public static void writeData(HSSFWorkbook hssfWorkBook, HSSFSheet genderSheet, HSSFSheet siteSheet, List<String> genderList, List<String> provinceList, Map<String, List<String>> siteMap) {
-        //循环将性别的数据写入genderSheet的第A列中
-        for (int i = 0; i < genderList.size(); i++) {
-            HSSFRow genderRow = genderSheet.createRow(i);
-            genderRow.createCell(0).setCellValue(genderList.get(i));
-        }
-        initGenderMapping(hssfWorkBook, genderSheet.getSheetName(), genderList.size());// 创建性别数据规则
+    public static void writeData(HSSFWorkbook hssfWorkBook, HSSFSheet siteSheet, List<String> provinceList, Map<String, List<String>> siteMap) {
         //循环将省数据写入siteSheet的第1行中
         int siteRowId = 0;
         HSSFRow provinceRow = siteSheet.createRow(siteRowId++);
@@ -165,7 +136,6 @@ public class ExcelExport {
             for (int i = 0; i < son.size(); i++) {
                 siteRow.createCell(i + 1).setCellValue(son.get(i));
             }
-
             // 添加名称管理器
             String range = getRange(1, siteRowId, son.size());
             Name name = hssfWorkBook.createName();
@@ -175,13 +145,13 @@ public class ExcelExport {
         }
     }
 
-    // 创建性别数据规则
-    private static void initGenderMapping(HSSFWorkbook workbook, String genderSheetName, int genderQuantity) {
-        Name genderName = workbook.createName();
-        genderName.setNameName("gender");
-        genderName.setRefersToFormula(genderSheetName + "!$A$1:$A$" + genderQuantity);
-    }
-
+    /**
+     * @param offset   偏移量，如果给0，表示从A列开始，1，就是从B列
+     * @param rowId    第几行
+     * @param colCount 一共多少列
+     * @return 如果给入参 1,1,10. 表示从B1-K1。最终返回 $B$1:$K$1
+     * @author denggonghai 2016年8月31日 下午5:17:49
+     */
     public static String getRange(int offset, int rowId, int colCount) {
         char start = (char) ('A' + offset);
         if (colCount <= 25) {
@@ -206,39 +176,6 @@ public class ExcelExport {
                 }
             }
             return "$" + start + "$" + rowId + ":$" + endPrefix + endSuffix + "$" + rowId;
-        }
-    }
-
-    // TODO 测试时间格式
-    public static void setDateFormat(HSSFWorkbook HSSFWorkbook, HSSFSheet mainsheet) {
-        HSSFDataValidationHelper dvHelper = new HSSFDataValidationHelper(mainsheet);
-        CellRangeAddressList regions = new CellRangeAddressList(1, 60, 4, 4);
-        DataValidationConstraint dvConstraint = dvHelper.createDateConstraint(OperatorType.BETWEEN, "1900-01-01", "5000-12-31", "yyyy-MM-dd");
-        HSSFDataValidation dataValidation = (HSSFDataValidation) dvHelper.createValidation(dvConstraint, regions);
-        // dataValidation.setSuppressDropDownArrow(false);
-        dataValidation.createPromptBox("输入提示", "请填写日期格式'yyyy-mm-dd'");
-        dataValidation.setShowPromptBox(true);
-        dataValidation.createErrorBox("日期格式错误提示", "你输入的日期格式不符合'yyyy-mm-dd'格式规范，请重新输入！");
-        dataValidation.setShowErrorBox(true);
-        mainsheet.addValidationData(dataValidation);
-    }
-
-    // TODO 测试数字规则
-    public static void setNumberFormat(HSSFWorkbook HSSFWorkbook, HSSFSheet mainsheet, List<Integer> colNum) {
-
-        if (colNum.size() > 0) {
-            for (Integer index : colNum) {
-                HSSFDataValidationHelper dvHelper = new HSSFDataValidationHelper(mainsheet);
-                CellRangeAddressList regions = new CellRangeAddressList(1, 60, index, index);
-                DataValidationConstraint dvConstraint = dvHelper.createNumericConstraint(ValidationType.DECIMAL, OperatorType.BETWEEN, "0.0001", "100000");
-                HSSFDataValidation dataValidation = (HSSFDataValidation) dvHelper.createValidation(dvConstraint, regions);
-                // dataValidation.setSuppressDropDownArrow(false);
-                dataValidation.createPromptBox("", "请填写数字(至多4位小数)!");
-                dataValidation.setShowPromptBox(true);
-                dataValidation.createErrorBox("数字格式错误提示", "你输入的数字不正确,请重新输入!");
-                dataValidation.setShowErrorBox(true);
-                mainsheet.addValidationData(dataValidation);
-            }
         }
     }
 }
