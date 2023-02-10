@@ -24,6 +24,7 @@
 
     <!-- set print log level  -->
     <logger name="com.nutcracker" level="DEBUG"/>
+    <logger name="com.alibaba.nacos" level="DEBUG"/>
 
     <!-- print transaction -->
     <logger name="org.mybatis.spring.SqlSessionUtils" level="DEBUG"/>

@@ -18,7 +18,6 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @EnableAsync
 @EnableCaching
 @NacosPropertySource(dataId = "fast-testing.yaml", autoRefreshed = true)
-//@EnableRedissonHttpSession
 @ServletComponentScan(basePackages = "com.nutcracker")
 @SpringBootApplication(scanBasePackages = "com.nutcracker")
 public class MainApplication {

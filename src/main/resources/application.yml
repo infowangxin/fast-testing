@@ -1,3 +1,9 @@
+#spring:
+#  main:
+    # 解决bean重复定义。设置为true，后定义bean覆盖之前定义相同名称的bean。springboot2.0.4开始支持，默认为rue；springboot2.1.0开始默认false
+#    allow-bean-definition-overriding: true
+    # springboot2.6.0 以后的版本默认禁止 Bean 之间的循环引用，默认为false
+#    allow-circular-references: true
 nacos:
   config:
     # 主配置服务器地址

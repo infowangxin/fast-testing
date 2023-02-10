@@ -1,13 +1,8 @@
 package com.nutcracker.config;
 
-import com.alibaba.nacos.api.config.annotation.NacosValue;
 import com.nutcracker.constant.CacheableKey;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
-import org.redisson.Redisson;
-import org.redisson.api.RedissonClient;
-import org.redisson.config.Config;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurer;
 import org.springframework.cache.interceptor.CacheErrorHandler;
@@ -17,7 +12,6 @@ import org.springframework.cache.interceptor.SimpleCacheErrorHandler;
 import org.springframework.cache.interceptor.SimpleCacheResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.cache.RedisCacheWriter;
@@ -27,14 +21,13 @@ import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSeriali
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-import java.io.IOException;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
 /**
- * Redis
+ * Redis config
  *
  * @author 胡桃夹子
  * @date 2020-03-01 09:49
@@ -46,21 +39,13 @@ public class RedisConfig implements CachingConfigurer {
     @Resource
     private RedisConnectionFactory redisConnectionFactory;
 
-    @Bean(destroyMethod = "shutdown")
-    public RedissonClient redissonClient(@NacosValue(value = "${spring.redis.redisson.config}", autoRefreshed = true) String path) throws IOException {
-        log.info("# redissonConfig={}", path);
-        String config = StringUtils.replace(path, "classpath:", "");
-        log.info("# config={}", config);
-        return Redisson.create(Config.fromYAML(new ClassPathResource(config).getInputStream()));
-    }
-
     /**
      * redisTemplate 序列化使用的jdkSerializeable, 存储二进制字节码, 所以自定义序列化类
      *
      * @return RedisTemplate<Object, Object>
      */
     @Bean
-    public RedisTemplate<Object, Object> redisTemplate() {
+    public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
         RedisTemplate<Object, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory);
 

@@ -1,6 +1,5 @@
 package com.nutcracker.config.security;
 
-import com.nutcracker.config.filter.ValidateCodeFilter;
 import com.nutcracker.config.security.handler.AuthenticationFailureHandler;
 import com.nutcracker.config.security.handler.AuthenticationSuccessHandler;
 import com.nutcracker.config.security.handler.CustomLogoutSuccessHandler;
@@ -48,13 +47,7 @@ public class SecurityConfigurer {
     private Boolean preventsLogin;
 
     @Resource
-    private UserDetailServiceImpl userDetailService;
-
-    @Resource
     private CustomAuthenticationProvider customAuthenticationProvider;
-
-    @Resource
-    private ValidateCodeFilter validateCodeFilter;
 
     @Resource
     private CustomInvalidSessionStrategy customInvalidSessionStrategy;
@@ -67,9 +60,6 @@ public class SecurityConfigurer {
 
     @Resource
     private AuthenticationFailureHandler authenticationFailureHandler;
-
-    @Resource
-    private SessionRegistry sessionRegistry;
 
     @Resource
     private CustomLogoutSuccessHandler customLogoutSuccessHandler;
@@ -119,7 +109,7 @@ public class SecurityConfigurer {
                         //.expiredUrl("/expired")
                         //超时处理
                         .expiredSessionStrategy(customExpiredSessionStrategy)
-                        .sessionRegistry(sessionRegistry);
+                        .sessionRegistry(getSessionRegistry());
             } catch (Exception e) {
                 log.error("# {}", e.getLocalizedMessage());
                 throw new RuntimeException(e);
